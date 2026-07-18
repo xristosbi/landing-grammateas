@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ο Αόρατος Γραμματέας — AI απαντήσεις &amp; ραντεβού για ιατρεία, 24/7</title>
+<meta name="description" content="AI chatbot που απαντάει σε κάθε μήνυμα στο site, στο Instagram και στο Facebook του ιατρείου σου — και κλείνει ραντεβού αυτόματα. 78 νέα ραντεβού σε 30 μέρες.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#121210;
+  --bg-raised:#1B1A17;
+  --bg-raised-2:#221F1B;
+  --ink:#F3EEE3;
+  --ink-dim:#B8B0A0;
+  --ink-faint:#7A7468;
+  --gold:#C9A24B;
+  --gold-bright:#E4C275;
+  --sage:#4C8C74;
+  --sage-bright:#6BAF93;
+  --wine:#7A3B45;
+  --wine-bright:#B0616D;
+  --hairline:rgba(243,238,227,0.10);
+  --radius:14px;
+  --wrap:1120px;
+  --sec-pad:110px;
+  --font-serif:'Fraunces',Georgia,serif;
+  --font-sans:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+/* ============================================================
+   RESET / BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:var(--font-serif);font-weight:600;line-height:1.15;letter-spacing:-0.01em}
+
+:focus-visible{
+  outline:2px solid var(--gold-bright);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+section{padding:var(--sec-pad) 0}
+
+/* eyebrow label */
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:18px;
+}
+
+.section-title{
+  font-size:clamp(28px,4vw,44px);
+  margin-bottom:16px;
+}
+.section-sub{
+  color:var(--ink-dim);
+  max-width:640px;
+  font-size:18px;
+}
+
+/* ============================================================
+   CTA BUTTON
+   ============================================================ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-bright));
+  color:#161307;
+  font-weight:700;
+  font-size:16px;
+  padding:16px 30px;
+  border-radius:999px;
+  border:none;
+  text-decoration:none;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  box-shadow:0 4px 24px rgba(201,162,75,0.25);
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 8px 32px rgba(201,162,75,0.35)}
+.btn:active{transform:translateY(0)}
+.btn--small{padding:10px 20px;font-size:14px}
+.btn .arrow{transition:transform .18s ease}
+.btn:hover .arrow{transform:translateX(3px)}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(18,18,16,0.72);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hairline);
+}
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:68px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+/* Logo placeholder — swap this box for a real <img> later */
+.logo-box{
+  width:38px;height:38px;
+  border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-bright));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif);
+  font-weight:700;
+  font-size:15px;
+  color:#161307;
+  flex-shrink:0;
+}
+.brand-name{
+  font-family:var(--font-serif);
+  font-size:17px;
+  font-weight:600;
+  color:var(--ink);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{padding:clamp(60px,9vw,110px) 0 var(--sec-pad)}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:64px;
+  align-items:center;
+}
+.hero h1{
+  font-size:clamp(38px,5.2vw,68px);
+  font-weight:600;
+  margin-bottom:22px;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--gold-bright);
+}
+.hero-tagline{
+  font-family:var(--font-serif);
+  font-style:italic;
+  font-size:clamp(19px,2.2vw,24px);
+  color:var(--sage-bright);
+  margin-bottom:20px;
+}
+.hero-sub{
+  color:var(--ink-dim);
+  font-size:18px;
+  max-width:520px;
+  margin-bottom:36px;
+}
+.hero-cta-row{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+}
+.hero-note{
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  color:var(--sage-bright);
+  max-width:230px;
+  line-height:1.55;
+}
+
+/* ---------- phone / DM mockup ---------- */
+.phone{
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-radius:26px;
+  padding:20px;
+  max-width:400px;
+  width:100%;
+  margin-left:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,0.45);
+  position:relative;
+}
+.phone-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--hairline);
+  margin-bottom:18px;
+}
+.phone-avatar{
+  width:40px;height:40px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--sage),var(--sage-bright));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif);
+  font-weight:700;
+  color:#0F1512;
+  font-size:15px;
+}
+.phone-title{font-weight:600;font-size:15px}
+.phone-status{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--sage-bright);
+}
+.dot-online{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--sage-bright);
+  box-shadow:0 0 8px var(--sage-bright);
+  animation:pulse 2.4s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.45}
+}
+
+.thread{display:flex;flex-direction:column;gap:12px}
+.bubble{
+  max-width:86%;
+  padding:11px 15px;
+  border-radius:16px;
+  font-size:14.5px;
+  line-height:1.5;
+  opacity:0;
+  transform:translateY(12px);
+  animation:riseIn .55s ease forwards;
+}
+.bubble .stamp{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--ink-faint);
+  margin-top:5px;
+}
+.bubble--patient{
+  align-self:flex-start;
+  background:var(--bg-raised-2);
+  border:1px solid var(--hairline);
+  border-bottom-left-radius:5px;
+}
+.bubble--ai{
+  align-self:flex-end;
+  background:linear-gradient(135deg,rgba(76,140,116,0.28),rgba(107,175,147,0.18));
+  border:1px solid rgba(107,175,147,0.30);
+  border-bottom-right-radius:5px;
+}
+.bubble--ai .stamp{color:var(--sage-bright)}
+.chip-booked{
+  align-self:center;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  font-weight:600;
+  color:var(--sage-bright);
+  background:rgba(76,140,116,0.14);
+  border:1px solid rgba(107,175,147,0.35);
+  border-radius:999px;
+  padding:7px 15px;
+  margin-top:4px;
+  opacity:0;
+  transform:translateY(12px);
+  animation:riseIn .55s ease forwards;
+}
+@keyframes riseIn{
+  to{opacity:1;transform:translateY(0)}
+}
+/* staggered entrance */
+.b1{animation-delay:.4s}
+.b2{animation-delay:1.15s}
+.b3{animation-delay:1.9s}
+.b4{animation-delay:2.65s}
+.b5{animation-delay:3.4s}
+
+/* ============================================================
+   VSL PLACEHOLDER
+   ============================================================ */
+.vsl{padding-top:0}
+.vsl-box{
+  position:relative;
+  aspect-ratio:16/9;
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  overflow:hidden;
+}
+.vsl-box::before{
+  content:"";
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(201,162,75,0.08),transparent 65%);
+}
+.play-icon{
+  width:84px;height:84px;
+  border-radius:50%;
+  background:rgba(201,162,75,0.12);
+  border:1px solid rgba(201,162,75,0.45);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.play-icon::after{
+  content:"";
+  border-style:solid;
+  border-width:14px 0 14px 24px;
+  border-color:transparent transparent transparent var(--gold-bright);
+  margin-left:6px;
+}
+.vsl-label{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  position:relative;
+}
+
+/* ============================================================
+   CALCULATOR
+   ============================================================ */
+.calc-card{
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:clamp(28px,4vw,52px);
+  margin-top:44px;
+}
+.calc-label{
+  display:block;
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:22px;
+}
+.slider-row{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-bottom:40px;
+}
+input[type="range"]{
+  -webkit-appearance:none;
+  appearance:none;
+  flex:1;
+  height:6px;
+  border-radius:999px;
+  background:linear-gradient(to right,var(--gold) 0%,var(--gold) var(--fill,10%),var(--bg-raised-2) var(--fill,10%),var(--bg-raised-2) 100%);
+  outline-offset:6px;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:26px;height:26px;
+  border-radius:50%;
+  background:var(--gold-bright);
+  border:3px solid var(--bg);
+  box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(0,0,0,0.5);
+  cursor:grab;
+}
+input[type="range"]::-moz-range-thumb{
+  width:26px;height:26px;
+  border-radius:50%;
+  background:var(--gold-bright);
+  border:3px solid var(--bg);
+  box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(0,0,0,0.5);
+  cursor:grab;
+}
+.slider-value{
+  font-family:var(--font-mono);
+  font-size:22px;
+  font-weight:600;
+  color:var(--gold-bright);
+  min-width:74px;
+  text-align:right;
+}
+.calc-results{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.calc-result{
+  background:var(--bg-raised-2);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:28px 26px;
+}
+.calc-result .num{
+  font-family:var(--font-serif);
+  font-size:clamp(34px,4vw,48px);
+  font-weight:600;
+  color:var(--gold-bright);
+  line-height:1.05;
+}
+.calc-result .lbl{
+  font-size:14px;
+  color:var(--ink-dim);
+  margin-top:8px;
+}
+.calc-fine{
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  color:var(--ink-faint);
+  margin-top:26px;
+  line-height:1.6;
+}
+
+/* ============================================================
+   PAIN GRID
+   ============================================================ */
+.pain-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+  margin-top:52px;
+}
+.pain-card{
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-top:3px solid var(--wine-bright);
+  border-radius:var(--radius);
+  padding:32px 28px;
+}
+.pain-num{
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.15em;
+  color:var(--wine-bright);
+  display:block;
+  margin-bottom:18px;
+}
+.pain-card h3{
+  font-size:21px;
+  margin-bottom:12px;
+}
+.pain-card p{
+  font-size:15px;
+  color:var(--ink-dim);
+}
+
+/* ============================================================
+   MECHANISM
+   ============================================================ */
+.mech-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  margin-top:52px;
+}
+.mech-card{
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:38px 34px;
+  position:relative;
+  overflow:hidden;
+}
+.mech-card::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.mech-tag{
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:16px;
+}
+.mech-card h3{
+  font-size:24px;
+  margin-bottom:14px;
+}
+.mech-card p{
+  color:var(--ink-dim);
+  font-size:15.5px;
+}
+.mech-card p + p{margin-top:12px}
+.handoff{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:18px;
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  font-weight:600;
+  color:var(--sage-bright);
+  background:rgba(76,140,116,0.12);
+  border:1px solid rgba(107,175,147,0.3);
+  border-radius:999px;
+  padding:7px 14px;
+}
+
+/* ============================================================
+   PROOF STRIP
+   ============================================================ */
+.proof{
+  background:linear-gradient(160deg,rgba(201,162,75,0.07),rgba(76,140,116,0.06) 55%,transparent);
+  border-top:1px solid var(--hairline);
+  border-bottom:1px solid var(--hairline);
+}
+.proof-inner{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:clamp(40px,7vw,100px);
+  align-items:center;
+}
+.proof-label{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:6px;
+}
+.proof-big{
+  font-family:var(--font-serif);
+  font-size:clamp(76px,12vw,132px);
+  font-weight:700;
+  line-height:0.95;
+  color:var(--gold-bright);
+}
+.proof-caption{
+  color:var(--ink-dim);
+  font-size:16px;
+  max-width:290px;
+  margin-top:14px;
+}
+.proof-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.proof-stat{
+  border-left:1px solid var(--hairline);
+  padding-left:24px;
+}
+.proof-stat .num{
+  font-family:var(--font-serif);
+  font-size:clamp(30px,3.4vw,38px);
+  font-weight:600;
+  color:var(--sage-bright);
+  line-height:1.1;
+}
+.proof-stat .lbl{
+  font-size:14px;
+  color:var(--ink-dim);
+  margin-top:8px;
+}
+.proof-cta{margin-top:52px}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list{margin-top:52px;border-top:1px solid var(--hairline)}
+.faq-item{border-bottom:1px solid var(--hairline)}
+.faq-q{
+  width:100%;
+  background:none;
+  border:none;
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  text-align:left;
+  padding:26px 4px;
+  font-family:var(--font-serif);
+  font-size:clamp(18px,2vw,21px);
+  font-weight:600;
+}
+.faq-q .icon{
+  flex-shrink:0;
+  width:28px;height:28px;
+  border-radius:50%;
+  border:1px solid var(--hairline);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);
+  font-size:15px;
+  color:var(--gold-bright);
+  transition:transform .25s ease;
+}
+.faq-item.open .faq-q .icon{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+}
+.faq-a-inner{
+  padding:0 4px 28px;
+  color:var(--ink-dim);
+  font-size:16px;
+  max-width:720px;
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline{
+  margin-top:56px;
+  position:relative;
+  padding-left:36px;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:8px;top:8px;bottom:8px;
+  width:1px;
+  background:linear-gradient(to bottom,var(--gold),rgba(201,162,75,0.15));
+}
+.tl-item{
+  position:relative;
+  padding-bottom:46px;
+}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{
+  content:"";
+  position:absolute;
+  left:-33px;top:7px;
+  width:11px;height:11px;
+  border-radius:50%;
+  background:var(--gold-bright);
+  box-shadow:0 0 0 4px rgba(201,162,75,0.18);
+}
+.tl-day{
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:8px;
+}
+.tl-item h3{font-size:21px;margin-bottom:8px}
+.tl-item p{color:var(--ink-dim);font-size:15.5px;max-width:600px}
+
+/* ============================================================
+   APPLY FORM
+   ============================================================ */
+.apply-grid{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:64px;
+  align-items:start;
+  margin-top:52px;
+}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:20px}
+.check-list li{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  color:var(--ink-dim);
+  font-size:16.5px;
+}
+.check-list .check{
+  flex-shrink:0;
+  width:24px;height:24px;
+  border-radius:50%;
+  background:rgba(76,140,116,0.15);
+  border:1px solid rgba(107,175,147,0.4);
+  color:var(--sage-bright);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+  margin-top:2px;
+}
+.form-card{
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:clamp(28px,3.5vw,44px);
+}
+.field{margin-bottom:22px}
+.field label{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+  margin-bottom:9px;
+}
+.field input{
+  width:100%;
+  background:var(--bg-raised-2);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:16px;
+  padding:14px 16px;
+  transition:border-color .18s ease;
+}
+.field input::placeholder{color:var(--ink-faint)}
+.field input:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,162,75,0.15);
+}
+.form-card .btn{width:100%;justify-content:center;margin-top:6px}
+.form-success{
+  display:none;
+  text-align:center;
+  padding:34px 10px;
+}
+.form-success.visible{display:block}
+.form-success .big-check{
+  width:64px;height:64px;
+  margin:0 auto 22px;
+  border-radius:50%;
+  background:rgba(76,140,116,0.15);
+  border:1px solid rgba(107,175,147,0.45);
+  color:var(--sage-bright);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;
+}
+.form-success h3{font-size:24px;margin-bottom:12px}
+.form-success p{color:var(--ink-dim);font-size:16px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{
+  border-top:1px solid var(--hairline);
+  padding:56px 0;
+}
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.footer-by{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--ink-faint);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:960px){
+  section{padding:72px 0}
+  .hero{padding-top:48px}
+  .hero-grid{grid-template-columns:1fr;gap:52px}
+  .phone{margin:0 auto}
+  .pain-grid{grid-template-columns:1fr}
+  .mech-grid{grid-template-columns:1fr}
+  .proof-inner{grid-template-columns:1fr;gap:48px}
+  .proof-stats{grid-template-columns:1fr;gap:26px}
+  .apply-grid{grid-template-columns:1fr;gap:44px}
+  .calc-results{grid-template-columns:1fr}
+}
+@media (max-width:540px){
+  .brand-name{font-size:14.5px}
+  .nav .btn--small{padding:9px 14px;font-size:12.5px}
+  .slider-row{flex-direction:column;align-items:stretch;gap:16px}
+  .slider-value{text-align:left}
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-delay:0s !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+  .bubble,.chip-booked{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Ο Αόρατος Γραμματέας — αρχική">
+      <!-- Logo placeholder: αντικατάσταση με πραγματικό <img> αργότερα -->
+      <span class="logo-box" aria-hidden="true">ΙΑ</span>
+      <span class="brand-name">Ο Αόρατος Γραμματέας</span>
+    </a>
+    <a class="btn btn--small" href="#apply">Πάτα το link για να μάθεις περισσότερα <span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Για ιδιωτικά ιατρεία &amp; κλινικές</span>
+      <h1>Ένας πελάτης μας έχανε <em>€2.000+</em> τον μήνα από μηνύματα που δεν πρόλαβε να απαντήσει η γραμματεία.</h1>
+      <p class="hero-tagline">Όποιος απαντάει πρώτος, κλείνει τον ασθενή.</p>
+      <p class="hero-sub">Τα μηνύματα που μένουν αναπάντητα στο Instagram και στο Facebook δεν περιμένουν. Ο ασθενής γράφει στον επόμενο γιατρό της λίστας — αυτόν που απάντησε πρώτος.</p>
+      <div class="hero-cta-row">
+        <a class="btn" href="#apply">Πάτα το link για να μάθεις περισσότερα <span class="arrow" aria-hidden="true">→</span></a>
+        <p class="hero-note">78 νέα ραντεβού σε 30 μέρες — πραγματικό case study</p>
+      </div>
+    </div>
+
+    <!-- phone / DM mockup -->
+    <div class="phone" role="img" aria-label="Παράδειγμα συνομιλίας: ασθενής στέλνει μήνυμα στις 23:47, το AI απαντά σε 6 δευτερόλεπτα και κλείνει ραντεβού αυτόματα.">
+      <div class="phone-head">
+        <div class="phone-avatar" aria-hidden="true">ΚΔ</div>
+        <div>
+          <div class="phone-title">Κλινική Δέρματος</div>
+          <div class="phone-status"><span class="dot-online"></span> online — απαντά τώρα</div>
+        </div>
+      </div>
+      <div class="thread" aria-hidden="true">
+        <div class="bubble bubble--patient b1">
+          Γεια σας, δέχεστε ΕΟΠΥΥ; Θα ήθελα ραντεβού.
+          <span class="stamp">Ασθενής · 23:47</span>
+        </div>
+        <div class="bubble bubble--ai b2">
+          Καλησπέρα! Ναι, δεχόμαστε ΕΟΠΥΥ για επιλεγμένες υπηρεσίες. Έχετε προτίμηση σε μέρα;
+          <span class="stamp">AI · 23:47 — απάντηση σε 6 δευτ.</span>
+        </div>
+        <div class="bubble bubble--patient b3">
+          Τετάρτη πρωί, αν γίνεται
+          <span class="stamp">Ασθενής · 23:48</span>
+        </div>
+        <div class="bubble bubble--ai b4">
+          Τετάρτη 10:30 ✓ Σας κράτησα τη θέση.
+          <span class="stamp">AI · 23:48</span>
+        </div>
+        <div class="chip-booked b5">📅 ραντεβού κλεισμένο αυτόματα</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     VSL PLACEHOLDER
+     ============================================================ -->
+<section class="vsl" aria-label="Βίντεο παρουσίασης">
+  <div class="wrap">
+    <!-- Το VSL βίντεο θα προστεθεί εδώ αργότερα -->
+    <div class="vsl-box">
+      <div class="play-icon" aria-hidden="true"></div>
+      <div class="vsl-label">Placeholder — VSL έρχεται σύντομα</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CALCULATOR
+     ============================================================ -->
+<section id="calculator">
+  <div class="wrap">
+    <span class="eyebrow">Το κόστος της σιωπής</span>
+    <h2 class="section-title">Πόσα ραντεβού χάνεις κάθε μήνα;</h2>
+    <p class="section-sub">Σύρε τον δείκτη και δες τι σου κοστίζουν τα αναπάντητα μηνύματα — σε ραντεβού και σε έσοδα.</p>
+
+    <div class="calc-card">
+      <label class="calc-label" for="msgSlider">Πόσα μηνύματα μένουν αναπάντητα την εβδομάδα εκτός ωραρίου;</label>
+      <div class="slider-row">
+        <input type="range" id="msgSlider" min="10" max="500" step="5" value="60"
+               aria-describedby="calcFine">
+        <output class="slider-value" id="msgValue" for="msgSlider">60</output>
+      </div>
+      <div class="calc-results" aria-live="polite">
+        <div class="calc-result">
+          <div class="num" id="lostAppts">—</div>
+          <div class="lbl">χαμένα ραντεβού τον μήνα</div>
+        </div>
+        <div class="calc-result">
+          <div class="num" id="lostRevenue">—</div>
+          <div class="lbl">χαμένα έσοδα τον μήνα</div>
+        </div>
+      </div>
+      <p class="calc-fine" id="calcFine">Εκτίμηση βάσει μέσου όρου πελατών μας: ~25% μετατροπή μηνύματος σε ραντεβού, μέσος όρος €120/επίσκεψη.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAIN GRID
+     ============================================================ -->
+<section id="pain">
+  <div class="wrap">
+    <span class="eyebrow">Το πρόβλημα</span>
+    <h2 class="section-title">Κάθε αναπάντητο μήνυμα είναι ένας ασθενής που πήγε αλλού.</h2>
+
+    <div class="pain-grid">
+      <article class="pain-card">
+        <span class="pain-num">01</span>
+        <h3>Το Instagram κοιμάται. Ο ανταγωνισμός σου, όχι.</h3>
+        <p>Τα περισσότερα μηνύματα έρχονται εκτός ωραρίου — το βράδυ, το σαββατοκύριακο, στις αργίες. Μέχρι να τα δει κάποιος το πρωί, ο ασθενής έχει ήδη γράψει αλλού.</p>
+      </article>
+      <article class="pain-card">
+        <span class="pain-num">02</span>
+        <h3>Η γραμματεία απαντάει τα ίδια 50 φορές τη μέρα.</h3>
+        <p>Ωράριο, τιμές, ΕΟΠΥΥ, διεύθυνση — ξανά και ξανά, όλη μέρα. Ώρες δουλειάς που θα μπορούσαν να πηγαίνουν στους ασθενείς που είναι ήδη μέσα στο ιατρείο.</p>
+      </article>
+      <article class="pain-card">
+        <span class="pain-num">03</span>
+        <h3>Όποιος γράψει πρώτος, κερδίζει τον πελάτη.</h3>
+        <p>Ο ασθενής στέλνει το ίδιο μήνυμα σε 3-4 κλινικές ταυτόχρονα. Δεν κλείνει με την «καλύτερη» — κλείνει με όποια του απάντησε πρώτη.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MECHANISM
+     ============================================================ -->
+<section id="mechanism">
+  <div class="wrap">
+    <span class="eyebrow">Πώς λειτουργεί</span>
+    <h2 class="section-title">Δύο γρανάζια. Ένα αποτέλεσμα: γεμάτο ημερολόγιο.</h2>
+
+    <div class="mech-grid">
+      <article class="mech-card">
+        <span class="mech-tag">Γρανάζι 01</span>
+        <h3>Instant Reply Engine</h3>
+        <p>Απαντάει αμέσως σε κάθε μήνυμα — στο chat του site, στο Instagram και στο Facebook. Σε φυσικά ελληνικά, εκπαιδευμένο στα δεδομένα του δικού σου ιατρείου: υπηρεσίες, τιμές, ωράριο, οδηγίες.</p>
+        <p>Όταν ένα ερώτημα είναι σύνθετο ή ιατρικό, δεν αυτοσχεδιάζει — το προωθεί στη γραμματεία για ανθρώπινη απάντηση.</p>
+        <span class="handoff">↗ Human Handoff για σύνθετα ερωτήματα</span>
+      </article>
+      <article class="mech-card">
+        <span class="mech-tag">Γρανάζι 02</span>
+        <h3>Auto-Booking Engine</h3>
+        <p>Μόλις ο ασθενής δεχτεί μέρα και ώρα, το ραντεβού καταγράφεται αυτόματα — είτε σε ειδική βάση δεδομένων που στήνουμε για το ιατρείο σου, είτε απευθείας στο ημερολόγιό σου, ανάλογα με το πώς λειτουργεί η κλινική.</p>
+        <p>Εσύ αποφασίζεις τη ροή. Το σύστημα προσαρμόζεται στον τρόπο δουλειάς σου — όχι το αντίστροφο.</p>
+        <span class="handoff">✓ Κανένα μήνυμα δεν μένει αναπάντητο</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROOF STRIP
+     ============================================================ -->
+<section class="proof" id="proof">
+  <div class="wrap">
+    <div class="proof-inner">
+      <div>
+        <span class="proof-label">Το μεγαλύτερο αποτέλεσμά μας</span>
+        <div class="proof-big">78</div>
+        <p class="proof-caption">νέα ραντεβού σε 30 μέρες, από μηνύματα που πριν έμεναν αναπάντητα</p>
+      </div>
+      <div class="proof-stats">
+        <div class="proof-stat">
+          <div class="num">24/7</div>
+          <div class="lbl">διαθεσιμότητα σε site, Instagram και Facebook — και τα μεσάνυχτα, και τις αργίες</div>
+        </div>
+        <div class="proof-stat">
+          <div class="num">&lt;10 δευτ.</div>
+          <div class="lbl">μέσος χρόνος πρώτης απάντησης σε κάθε νέο μήνυμα</div>
+        </div>
+        <div class="proof-stat">
+          <div class="num">0</div>
+          <div class="lbl">ανθρώπινη παρέμβαση για να κλείσει ένα ραντεβού</div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-cta">
+      <a class="btn" href="#apply">Πάτα το link για να μάθεις περισσότερα <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow">Συχνές ερωτήσεις</span>
+    <h2 class="section-title">Ό,τι σκέφτεσαι τώρα, το έχουμε ακούσει</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Θα καταλαβαίνει σωστά τι μου γράφει ο ασθενής;
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Ναι. Είναι εκπαιδευμένο σε φυσικά ελληνικά — όπως γράφουν πραγματικοί ασθενείς, με συντομογραφίες, greeklish και ασάφειες — και επιπλέον στα δεδομένα του δικού σου ιατρείου. Αν ένα μήνυμα είναι πραγματικά ασαφές, δεν μαντεύει: το προωθεί στη γραμματεία σου.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Θα δώσει λάθος ιατρική συμβουλή;
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Όχι — γιατί δεν δίνει καμία. Είναι κλειδωμένο αποκλειστικά σε διοικητικές ερωτήσεις: υπηρεσίες, τιμές, ωράριο, ραντεβού. Καμία διάγνωση, καμία θεραπευτική οδηγία. Ό,τι ακουμπάει ιατρικό ερώτημα, πηγαίνει σε άνθρωπο.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Δεν έχω χρόνο να το στήσω.
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Δεν χρειάζεται να το στήσεις εσύ. Είναι Done-For-You: εμείς το συνδέουμε με το site, το Instagram και το Facebook σου, εμείς το εκπαιδεύουμε στα δεδομένα σου. Από εσένα χρειαζόμαστε ένα onboarding call — τίποτα άλλο.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Γιατί μηνιαία συνδρομή;
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Γιατί δουλεύει κάθε μέρα, όλο τον μήνα. Ένα σύστημα που σώζει δεκάδες ραντεβού τον μήνα κοστίζει κλάσμα της αξίας που φέρνει — ένα-δύο ραντεβού αρκούν συνήθως για να καλυφθεί η συνδρομή. Τα υπόλοιπα είναι καθαρό κέρδος.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Οι ασθενείς μου είναι premium, θέλουν ανθρώπινη επαφή.
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Και θα την έχουν — τη σωστή στιγμή. Ορίζουμε μαζί λέξεις-κλειδιά και τύπους ερωτημάτων που ενεργοποιούν αυτόματα Human Handoff προς τη γραμματεία σου. Το AI καλύπτει τα επαναλαμβανόμενα και τα μετά τις 21:00· οι άνθρωποί σου κρατούν τις συζητήσεις που μετράνε.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ONBOARDING TIMELINE
+     ============================================================ -->
+<section id="onboarding">
+  <div class="wrap">
+    <span class="eyebrow">Onboarding</span>
+    <h2 class="section-title">Από την πρώτη επαφή μέχρι το live: 7 ημέρες.</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="tl-day">Ημέρα 1</span>
+        <h3>Onboarding call</h3>
+        <p>Καταγράφουμε τιμές, ωράριο, υπηρεσίες και τις λέξεις-κλειδιά που ενεργοποιούν Human Handoff προς τη γραμματεία σου.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-day">Ημέρες 2–5</span>
+        <h3>Σύνδεση &amp; εκπαίδευση</h3>
+        <p>Συνδέουμε το σύστημα με το chat του site, το Instagram και το Facebook σου, και το εκπαιδεύουμε στα δεδομένα του ιατρείου.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-day">Ημέρα 6</span>
+        <h3>Δοκιμαστικά σενάρια</h3>
+        <p>Τρέχουμε σενάρια με πραγματικά μηνύματα ασθενών και ελέγχουμε κάθε απάντηση, πριν πάει οτιδήποτε live.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-day">Ημέρα 7</span>
+        <h3>Live</h3>
+        <p>Το σύστημα απαντά 24/7. Εσύ λαμβάνεις μηνιαία αναφορά με τα ραντεβού που έκλεισε.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     APPLY FORM
+     ============================================================ -->
+<section id="apply">
+  <div class="wrap">
+    <span class="eyebrow">Αίτηση</span>
+    <h2 class="section-title">Δες αν ταιριάζει στο δικό σου ιατρείο.</h2>
+
+    <div class="apply-grid">
+      <div>
+        <p class="section-sub" style="margin-bottom:34px">Ο Αόρατος Γραμματέας είναι για ιατρεία και κλινικές που:</p>
+        <ul class="check-list">
+          <li><span class="check" aria-hidden="true">✓</span> Λαμβάνουν μηνύματα τακτικά στο site, στο Instagram ή στο Facebook</li>
+          <li><span class="check" aria-hidden="true">✓</span> Θέλουν να σταματήσουν να χάνουν ασθενείς εκτός ωραρίου</li>
+          <li><span class="check" aria-hidden="true">✓</span> Θέλουν μετρήσιμο αποτέλεσμα — ραντεβού στο ημερολόγιο, όχι υποσχέσεις</li>
+        </ul>
+      </div>
+
+      <div class="form-card">
+        <!-- TODO: σύνδεση με Formspree endpoint αργότερα, π.χ.
+             <form action="https://formspree.io/f/XXXXXXXX" method="POST"> -->
+        <form id="applyForm" action="" novalidate>
+          <div class="field">
+            <label for="fName">Όνομα</label>
+            <input type="text" id="fName" name="name" placeholder="π.χ. Δρ. Μαρία Παπαδοπούλου" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="fClinic">Ιατρείο / Κλινική</label>
+            <input type="text" id="fClinic" name="clinic" placeholder="π.χ. Derma Clinic Αθήνα" required autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="fHandle">Instagram / Facebook handle</label>
+            <input type="text" id="fHandle" name="handle" placeholder="π.χ. @dermaclinic.gr" required>
+          </div>
+          <div class="field">
+            <label for="fEmail">Email</label>
+            <input type="email" id="fEmail" name="email" placeholder="π.χ. info@dermaclinic.gr" required autocomplete="email">
+          </div>
+          <button type="submit" class="btn">Πάτα το link για να μάθεις περισσότερα <span class="arrow" aria-hidden="true">→</span></button>
+        </form>
+
+        <div class="form-success" id="formSuccess" role="status">
+          <div class="big-check" aria-hidden="true">✓</div>
+          <h3>Το λάβαμε — ευχαριστούμε!</h3>
+          <p>Θα σου απαντήσουμε με μήνυμα μέσα στις επόμενες 24 ώρες, με τα επόμενα βήματα για το ιατρείο σου.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="logo-box" aria-hidden="true">ΙΑ</span>
+      <span class="brand-name">Ο Αόρατος Γραμματέας</span>
+    </div>
+    <a class="btn btn--small" href="#apply">Πάτα το link για να μάθεις περισσότερα <span class="arrow" aria-hidden="true">→</span></a>
+    <span class="footer-by">by Imperial Automations</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CALCULATOR — "Το κόστος της σιωπής"
+   lost appointments/month = μηνύματα/εβδομάδα × 0.25 × 4.33
+   lost revenue/month      = lost appointments × €120
+   ============================================================ */
+(function(){
+  var slider   = document.getElementById('msgSlider');
+  var valueOut = document.getElementById('msgValue');
+  var apptsEl  = document.getElementById('lostAppts');
+  var revEl    = document.getElementById('lostRevenue');
+
+  function update(){
+    var perWeek = parseInt(slider.value, 10);
+    var lostAppts = perWeek * 0.25 * 4.33;
+    var lostRevenue = lostAppts * 120;
+
+    valueOut.textContent = perWeek;
+    apptsEl.textContent = Math.round(lostAppts);
+    revEl.textContent = '€' + Math.round(lostRevenue).toLocaleString('el-GR');
+
+    /* γέμισμα του track μέχρι το thumb */
+    var pct = (perWeek - slider.min) / (slider.max - slider.min) * 100;
+    slider.style.setProperty('--fill', pct + '%');
+  }
+
+  slider.addEventListener('input', update);
+  update();
+})();
+
+/* ============================================================
+   FAQ ACCORDION — μία ανοιχτή κάθε φορά
+   ============================================================ */
+(function(){
+  var items = document.querySelectorAll('.faq-item');
+
+  items.forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    var panel = item.querySelector('.faq-a');
+
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+
+      items.forEach(function(other){
+        other.classList.remove('open');
+        other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        other.querySelector('.faq-a').style.maxHeight = null;
+      });
+
+      if(!isOpen){
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+
+/* ============================================================
+   APPLY FORM — success state toggle
+   Δεν υπάρχει backend ακόμα: όταν προστεθεί το Formspree
+   endpoint στο action του <form>, αφαίρεσε το preventDefault
+   ή κράτησέ το και στείλε τα δεδομένα με fetch().
+   ============================================================ */
+(function(){
+  var form = document.getElementById('applyForm');
+  var success = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+
+    form.style.display = 'none';
+    success.classList.add('visible');
+  });
+})();
+</script>
+
+</body>
+</html>
