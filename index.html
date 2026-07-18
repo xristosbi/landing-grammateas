@@ -739,13 +739,18 @@ input[type="range"]::-moz-range-thumb{
   box-shadow:0 0 0 3px rgba(201,162,75,0.15);
 }
 .form-card .btn{width:100%;justify-content:center;margin-top:6px}
-.form-success{
+/* ΒΗΜΑ 2 — Calendly */
+.form-step2{
   display:none;
-  text-align:center;
-  padding:34px 10px;
+  opacity:0;
+  transform:translateY(12px);
 }
-.form-success.visible{display:block}
-.form-success .big-check{
+.form-step2.visible{
+  display:block;
+  animation:riseIn .55s ease forwards;
+}
+.step2-head{text-align:center;margin-bottom:24px}
+.step2-head .big-check{
   width:64px;height:64px;
   margin:0 auto 22px;
   border-radius:50%;
@@ -755,8 +760,14 @@ input[type="range"]::-moz-range-thumb{
   display:flex;align-items:center;justify-content:center;
   font-size:28px;
 }
-.form-success h3{font-size:24px;margin-bottom:12px}
-.form-success p{color:var(--ink-dim);font-size:16px}
+.step2-head h3{font-size:24px;margin-bottom:12px}
+.step2-head p{color:var(--ink-dim);font-size:16px}
+.calendly-inline-widget{
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid var(--hairline);
+  background:var(--bg-raised-2);
+}
 
 /* ============================================================
    FOOTER
@@ -1125,8 +1136,12 @@ input[type="range"]::-moz-range-thumb{
       </div>
 
       <div class="form-card">
-        <!-- TODO: σύνδεση με Formspree endpoint αργότερα, π.χ.
-             <form action="https://formspree.io/f/XXXXXXXX" method="POST"> -->
+        <!-- ΒΗΜΑ 1: στοιχεία -->
+        <!-- TODO: σύνδεση με Formspree/backend endpoint αργότερα, ώστε τα
+             στοιχεία του βήματος 1 να αποθηκεύονται πριν ο χρήστης προχωρήσει
+             στο Calendly, π.χ.
+             <form action="https://formspree.io/f/XXXXXXXX" method="POST">
+             (ή fetch() POST μέσα στο submit handler πιο κάτω) -->
         <form id="applyForm" action="" novalidate>
           <div class="field">
             <label for="fName">Όνομα</label>
@@ -1147,10 +1162,19 @@ input[type="range"]::-moz-range-thumb{
           <button type="submit" class="btn">Πάτα το link για να μάθεις περισσότερα <span class="arrow" aria-hidden="true">→</span></button>
         </form>
 
-        <div class="form-success" id="formSuccess" role="status">
-          <div class="big-check" aria-hidden="true">✓</div>
-          <h3>Το λάβαμε — ευχαριστούμε!</h3>
-          <p>Θα σου απαντήσουμε με μήνυμα μέσα στις επόμενες 24 ώρες, με τα επόμενα βήματα για το ιατρείο σου.</p>
+        <!-- ΒΗΜΑ 2: Calendly inline embed — εμφανίζεται μετά το submit του βήματος 1 -->
+        <div class="form-step2" id="formStep2" role="status">
+          <div class="step2-head">
+            <div class="big-check" aria-hidden="true">✓</div>
+            <h3>Ένα βήμα ακόμα — κλείσε το demo σου</h3>
+            <p>Διάλεξε μέρα και ώρα που σε βολεύει. Τα στοιχεία σου είναι ήδη συμπληρωμένα.</p>
+          </div>
+          <!-- TODO: αντικατάσταση του CALENDLY_URL με το πραγματικό Calendly link
+               όταν οριστικοποιηθεί. Τρέχον link (ορίζεται στο JS πιο κάτω, στη
+               σταθερά CALENDLY_URL): https://calendly.com/xristosbithizis/30min
+               Το widget div δημιουργείται δυναμικά στο submit, ώστε το data-url
+               να περιέχει prefill (name, email) από το βήμα 1. -->
+          <div id="calendlyContainer"></div>
         </div>
       </div>
     </div>
@@ -1230,14 +1254,59 @@ input[type="range"]::-moz-range-thumb{
 })();
 
 /* ============================================================
-   APPLY FORM — success state toggle
-   Δεν υπάρχει backend ακόμα: όταν προστεθεί το Formspree
-   endpoint στο action του <form>, αφαίρεσε το preventDefault
-   ή κράτησέ το και στείλε τα δεδομένα με fetch().
+   APPLY FORM — 2-step flow
+   Βήμα 1: στοιχεία (Όνομα / Ιατρείο / handle / Email)
+   Βήμα 2: inline Calendly embed με prefill name + email
    ============================================================ */
 (function(){
-  var form = document.getElementById('applyForm');
-  var success = document.getElementById('formSuccess');
+  /* TODO: αντικατάσταση με το πραγματικό Calendly link όταν δοθεί το τελικό */
+  var CALENDLY_URL = 'https://calendly.com/xristosbithizis/30min';
+
+  var form  = document.getElementById('applyForm');
+  var step2 = document.getElementById('formStep2');
+  var calendlyContainer = document.getElementById('calendlyContainer');
+
+  /* προσωρινή αποθήκευση στοιχείων βήματος 1 (JS state) */
+  var leadData = {};
+
+  function buildCalendlyUrl(){
+    /* Calendly prefill μέσω query params: name & email υποστηρίζονται επίσημα.
+       Επιπλέον embed params για να δέσει με το σκούρο design system. */
+    var params = new URLSearchParams({
+      name: leadData.name || '',
+      email: leadData.email || '',
+      hide_gdpr_banner: '1',
+      background_color: '1B1A17',
+      text_color: 'F3EEE3',
+      primary_color: 'C9A24B'
+    });
+    return CALENDLY_URL + '?' + params.toString();
+  }
+
+  function mountCalendly(){
+    /* Official Calendly inline embed: δημιουργούμε το widget div δυναμικά
+       ώστε το data-url να περιέχει τα prefill στοιχεία του βήματος 1,
+       και μετά φορτώνουμε το official script (auto-initializes το div). */
+    var widget = document.createElement('div');
+    widget.className = 'calendly-inline-widget';
+    widget.setAttribute('data-url', buildCalendlyUrl());
+    widget.style.minWidth = '320px';
+    widget.style.height = '630px';
+    calendlyContainer.appendChild(widget);
+
+    if(window.Calendly && typeof window.Calendly.initInlineWidget === 'function'){
+      /* script ήδη φορτωμένο (π.χ. δεύτερο submit) */
+      window.Calendly.initInlineWidget({
+        url: buildCalendlyUrl(),
+        parentElement: widget
+      });
+    }else{
+      var script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -1247,8 +1316,26 @@ input[type="range"]::-moz-range-thumb{
       return;
     }
 
+    leadData = {
+      name:   document.getElementById('fName').value.trim(),
+      clinic: document.getElementById('fClinic').value.trim(),
+      handle: document.getElementById('fHandle').value.trim(),
+      email:  document.getElementById('fEmail').value.trim()
+    };
+
+    /* TODO: αποθήκευση των στοιχείων του βήματος 1 σε Formspree/backend
+       endpoint ΠΡΙΝ ο χρήστης προχωρήσει στο Calendly, π.χ.
+       fetch('https://formspree.io/f/XXXXXXXX', {
+         method:'POST',
+         headers:{'Content-Type':'application/json','Accept':'application/json'},
+         body: JSON.stringify(leadData)
+       });
+       Σήμερα δεν υπάρχει endpoint — τα στοιχεία μένουν μόνο σε JS state. */
+
+    /* ΒΗΜΑ 1 → ΒΗΜΑ 2 */
     form.style.display = 'none';
-    success.classList.add('visible');
+    step2.classList.add('visible');
+    mountCalendly();
   });
 })();
 </script>
