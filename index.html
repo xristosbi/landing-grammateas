@@ -146,6 +146,12 @@ section{padding:var(--sec-pad) 0}
   color:#161307;
   flex-shrink:0;
 }
+.logo-img{
+  width:38px;height:38px;
+  border-radius:9px;
+  object-fit:contain;
+  flex-shrink:0;
+}
 .brand-name{
   font-family:var(--font-serif);
   font-size:17px;
@@ -862,8 +868,7 @@ input[type="range"]::-moz-range-thumb{
 <nav class="nav">
   <div class="wrap nav-inner">
     <a class="brand" href="#top" aria-label="Ο Αόρατος Γραμματέας — αρχική">
-      <!-- Logo placeholder: αντικατάσταση με πραγματικό <img> αργότερα -->
-      <span class="logo-box" aria-hidden="true">ΙΑ</span>
+      <img class="logo-img" src="logo.png" alt="CB Automations">
       <span class="brand-name">Ο Αόρατος Γραμματέας</span>
     </a>
     <a class="btn btn--small" href="#apply">Κάνε αίτηση <span class="arrow" aria-hidden="true">→</span></a>
@@ -1188,12 +1193,8 @@ input[type="range"]::-moz-range-thumb{
       </div>
 
       <div class="form-card">
-        <!-- ΒΗΜΑ 1: στοιχεία -->
-        <!-- TODO: σύνδεση με Formspree/backend endpoint αργότερα, ώστε τα
-             στοιχεία του βήματος 1 να αποθηκεύονται πριν ο χρήστης προχωρήσει
-             στο Calendly, π.χ.
-             <form action="https://formspree.io/f/XXXXXXXX" method="POST">
-             (ή fetch() POST μέσα στο submit handler πιο κάτω) -->
+        <!-- ΒΗΜΑ 1: στοιχεία — τα δεδομένα στέλνονται στο Formspree μέσω
+             fetch() στο submit handler, πριν τη μετάβαση στο Calendly -->
         <form id="applyForm" action="" novalidate>
           <div class="field">
             <label for="fName">Όνομα</label>
@@ -1347,6 +1348,7 @@ input[type="range"]::-moz-range-thumb{
 (function(){
   /* TODO: αντικατάσταση με το πραγματικό Calendly link όταν δοθεί το τελικό */
   var CALENDLY_URL = 'https://calendly.com/xristosbithizis/30min';
+  var FORMSPREE_URL = 'https://formspree.io/f/xgogywzp';
 
   var form  = document.getElementById('applyForm');
   var step2 = document.getElementById('formStep2');
@@ -1413,14 +1415,20 @@ input[type="range"]::-moz-range-thumb{
       email:    document.getElementById('fEmail').value.trim()
     };
 
-    /* TODO: αποθήκευση των στοιχείων του βήματος 1 σε Formspree/backend
-       endpoint ΠΡΙΝ ο χρήστης προχωρήσει στο Calendly, π.χ.
-       fetch('https://formspree.io/f/XXXXXXXX', {
-         method:'POST',
-         headers:{'Content-Type':'application/json','Accept':'application/json'},
-         body: JSON.stringify(leadData)
-       });
-       Σήμερα δεν υπάρχει endpoint — τα στοιχεία μένουν μόνο σε JS state. */
+    /* Αποστολή στοιχείων βήματος 1 στο Formspree, fire-and-forget:
+       αν αποτύχει (π.χ. δίκτυο), ο χρήστης προχωράει κανονικά στο
+       Calendly — δεν τον μπλοκάρουμε για χάρη του tracking. */
+    try{
+      fetch(FORMSPREE_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(leadData)
+      }).catch(function(err){
+        console.error('Formspree submission failed:', err);
+      });
+    }catch(err){
+      console.error('Formspree submission failed:', err);
+    }
 
     /* ΒΗΜΑ 1 → ΒΗΜΑ 2 */
     form.style.display = 'none';
