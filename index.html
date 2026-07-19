@@ -351,6 +351,29 @@ section{padding:var(--sec-pad) 0}
   color:var(--ink-faint);
   position:relative;
 }
+/* compact case-study video placeholder (proof strip) */
+.vsl-mini{
+  margin-top:36px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:20px 26px;
+}
+.vsl-mini .play-icon{
+  width:48px;height:48px;
+  flex-shrink:0;
+}
+.vsl-mini .play-icon::after{
+  border-width:8px 0 8px 14px;
+  margin-left:4px;
+}
+.vsl-mini .vsl-label{
+  letter-spacing:0.1em;
+  line-height:1.6;
+}
 
 /* ============================================================
    CALCULATOR
@@ -924,25 +947,40 @@ input[type="range"]::-moz-range-thumb{
                aria-describedby="calcFine">
         <output class="slider-value" id="msgValue" for="msgSlider">60</output>
       </div>
+
+      <label class="calc-label" for="aovSlider">Μέσος όρος αξίας παραγγελίας/επίσκεψης (AOV)</label>
+      <div class="slider-row">
+        <input type="range" id="aovSlider" min="60" max="500" step="10" value="120"
+               aria-describedby="calcFine">
+        <output class="slider-value" id="aovValue" for="aovSlider">€120</output>
+      </div>
+
+      <label class="calc-label" for="freqSlider">Πόσες φορές το χρόνο ξαναγοράζει ένας πελάτης σου;</label>
+      <div class="slider-row">
+        <input type="range" id="freqSlider" min="1" max="12" step="1" value="3"
+               aria-describedby="calcFine">
+        <output class="slider-value" id="freqValue" for="freqSlider">3×</output>
+      </div>
+
       <div class="calc-results" aria-live="polite">
         <div class="calc-result">
           <div class="num" id="lostAppts">—</div>
-          <div class="lbl">χαμένα ραντεβού τον μήνα</div>
+          <div class="lbl">χαμένα ραντεβού / μήνα</div>
         </div>
         <div class="calc-result">
           <div class="num" id="lostRevenue">—</div>
-          <div class="lbl">χαμένα έσοδα τον μήνα</div>
+          <div class="lbl">χαμένα έσοδα / μήνα</div>
         </div>
         <div class="calc-result">
           <div class="num" id="lostAnnual">—</div>
-          <div class="lbl">ετήσια χαμένα έσοδα</div>
+          <div class="lbl">χαμένα έσοδα / χρόνο</div>
         </div>
         <div class="calc-result">
           <div class="num" id="lostLTV">—</div>
           <div class="lbl">χαμένη αξία πελατών (Lifetime Value)</div>
         </div>
       </div>
-      <p class="calc-fine" id="calcFine">Εκτίμηση βάσει μέσου όρου πελατών μας: ~25% μετατροπή μηνύματος σε ραντεβού, μέσος όρος €120/επίσκεψη (AOV), και ~€350 εκτιμώμενη συνολική αξία πελάτη (LTV) σε βάθος χρόνου.</p>
+      <p class="calc-fine" id="calcFine">~25% μετατροπή μηνύματος σε ραντεβού. Πρόσαρμοσε το AOV και τη συχνότητα επαναγοράς στα δικά σου νούμερα για να δεις την πραγματική ετήσια απώλεια.</p>
     </div>
   </div>
 </section>
@@ -986,14 +1024,14 @@ input[type="range"]::-moz-range-thumb{
     <div class="mech-grid">
       <article class="mech-card">
         <span class="mech-tag">Γρανάζι 01</span>
-        <h3>Instant Reply Engine</h3>
+        <h3>Μηχανισμός Άμεσης Απάντησης</h3>
         <p>Απαντάει σε κάθε μήνυμα οποιαδήποτε στιγμή της ημέρας — στις 11 το πρωί ή στις 11:39 το βράδυ — χωρίς να σηκώσεις εσύ το χέρι. Στο chat του site, στο Instagram και στο Facebook, σε φυσικά ελληνικά, εκπαιδευμένο στα δεδομένα της δικής σου επιχείρησης.</p>
         <p>Και σταματάει την ίδια ερώτηση να απαντιέται 50 φορές την ημέρα: ωράριο, τιμές, διαθεσιμότητα — τα αναλαμβάνει όλα. Όταν ένα ερώτημα είναι σύνθετο ή εξειδικευμένο, δεν αυτοσχεδιάζει — το προωθεί σε άνθρωπο της ομάδας σου.</p>
         <span class="handoff">↗ Human Handoff για σύνθετα ερωτήματα</span>
       </article>
       <article class="mech-card">
         <span class="mech-tag">Γρανάζι 02</span>
-        <h3>Auto-Booking Engine</h3>
+        <h3>Μηχανισμός Αυτόματης Κράτησης</h3>
         <p>Δεν κάνει μόνο αυτόματες απαντήσεις — κάνει και αυτόματες καταχωρήσεις. Μόλις ο πελάτης δεχτεί μέρα και ώρα, το ραντεβού καταγράφεται αυτόματα: είτε σε ειδική βάση δεδομένων που στήνουμε για την επιχείρησή σου, είτε απευθείας στο ημερολόγιό σου, ανάλογα με το πώς δουλεύεις.</p>
         <p>Εσύ αποφασίζεις τη ροή. Το σύστημα προσαρμόζεται στον τρόπο δουλειάς σου — όχι το αντίστροφο.</p>
         <span class="handoff">✓ Κανένα μήνυμα δεν μένει αναπάντητο</span>
@@ -1027,6 +1065,11 @@ input[type="range"]::-moz-range-thumb{
           <div class="lbl">ανθρώπινη παρέμβαση για να κλείσει ένα ραντεβού</div>
         </div>
       </div>
+    </div>
+    <!-- Το σύντομο case study βίντεο θα προστεθεί εδώ αργότερα -->
+    <div class="vsl-mini">
+      <div class="play-icon" aria-hidden="true"></div>
+      <div class="vsl-label">Placeholder — σύντομο case study video έρχεται</div>
     </div>
     <div class="proof-cta">
       <a class="btn" href="#apply">Κάνε αίτηση για να σου εγκαταστήσουμε το σύστημα και στη δική σου επιχείρηση. <span class="arrow" aria-hidden="true">→</span></a>
@@ -1165,6 +1208,10 @@ input[type="range"]::-moz-range-thumb{
             <input type="text" id="fHandle" name="handle" placeholder="π.χ. @studioaura.gr" required>
           </div>
           <div class="field">
+            <label for="fPhone">Τηλέφωνο</label>
+            <input type="tel" id="fPhone" name="phone" placeholder="π.χ. 69X XXX XXXX" required autocomplete="tel">
+          </div>
+          <div class="field">
             <label for="fEmail">Email</label>
             <input type="email" id="fEmail" name="email" placeholder="π.χ. info@studioaura.gr" required autocomplete="email">
           </div>
@@ -1208,17 +1255,18 @@ input[type="range"]::-moz-range-thumb{
 /* ============================================================
    CALCULATOR — "Το κόστος της σιωπής"
    lost appointments/month = μηνύματα/εβδομάδα × 0.25 × 4.33
-   lost revenue/month      = lost appointments × €120 (AOV)
-   annual lost revenue     = lost revenue/month × 12
-   lost customer LTV       = lost appointments × 12 × €350
-                             (€350 = παραδοχή μέσης συνολικής
-                              αξίας πελάτη σε βάθος χρόνου)
+   lost revenue/month      = lost appointments × AOV (slider B)
+   lost revenue/year       = lost revenue/month × 12
+   lost customer LTV       = lost revenue/year × συχνότητα
+                             επαναγοράς/χρόνο (slider C)
    ============================================================ */
 (function(){
-  var avgLifetimeValue = 350; /* παραδοχή: μέση αξία πελάτη (LTV) σε € */
-
-  var slider   = document.getElementById('msgSlider');
-  var valueOut = document.getElementById('msgValue');
+  var msgSlider  = document.getElementById('msgSlider');
+  var aovSlider  = document.getElementById('aovSlider');
+  var freqSlider = document.getElementById('freqSlider');
+  var msgOut  = document.getElementById('msgValue');
+  var aovOut  = document.getElementById('aovValue');
+  var freqOut = document.getElementById('freqValue');
   var apptsEl  = document.getElementById('lostAppts');
   var revEl    = document.getElementById('lostRevenue');
   var annualEl = document.getElementById('lostAnnual');
@@ -1228,25 +1276,38 @@ input[type="range"]::-moz-range-thumb{
     return '€' + Math.round(n).toLocaleString('el-GR');
   }
 
-  function update(){
-    var perWeek = parseInt(slider.value, 10);
-    var lostAppts = perWeek * 0.25 * 4.33;
-    var lostRevenue = lostAppts * 120;
-    var lostAnnual = lostRevenue * 12;
-    var lostLTV = lostAppts * 12 * avgLifetimeValue;
+  /* γέμισμα του track μέχρι το thumb */
+  function fill(slider){
+    var pct = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+    slider.style.setProperty('--fill', pct + '%');
+  }
 
-    valueOut.textContent = perWeek;
+  function update(){
+    var perWeek = parseInt(msgSlider.value, 10);
+    var aov     = parseInt(aovSlider.value, 10);
+    var freq    = parseInt(freqSlider.value, 10);
+
+    var lostAppts = perWeek * 0.25 * 4.33;
+    var lostRevenue = lostAppts * aov;
+    var lostAnnual = lostRevenue * 12;
+    var lostLTV = lostAnnual * freq;
+
+    msgOut.textContent = perWeek;
+    aovOut.textContent = '€' + aov;
+    freqOut.textContent = freq + '×';
     apptsEl.textContent = Math.round(lostAppts);
     revEl.textContent = euro(lostRevenue);
     annualEl.textContent = euro(lostAnnual);
     ltvEl.textContent = euro(lostLTV);
 
-    /* γέμισμα του track μέχρι το thumb */
-    var pct = (perWeek - slider.min) / (slider.max - slider.min) * 100;
-    slider.style.setProperty('--fill', pct + '%');
+    fill(msgSlider);
+    fill(aovSlider);
+    fill(freqSlider);
   }
 
-  slider.addEventListener('input', update);
+  msgSlider.addEventListener('input', update);
+  aovSlider.addEventListener('input', update);
+  freqSlider.addEventListener('input', update);
   update();
 })();
 
@@ -1296,10 +1357,13 @@ input[type="range"]::-moz-range-thumb{
 
   function buildCalendlyUrl(){
     /* Calendly prefill μέσω query params: name & email υποστηρίζονται επίσημα.
+       Το τηλέφωνο περνάει ως a1 — γεμίζει την 1η custom ερώτηση του event
+       (πρόσθεσε ερώτηση "Τηλέφωνο" ως πρώτη στο Calendly event για να δέσει).
        Επιπλέον embed params για να δέσει με το σκούρο design system. */
     var params = new URLSearchParams({
       name: leadData.name || '',
       email: leadData.email || '',
+      a1: leadData.phone || '',
       hide_gdpr_banner: '1',
       background_color: '1B1A17',
       text_color: 'F3EEE3',
@@ -1342,10 +1406,11 @@ input[type="range"]::-moz-range-thumb{
     }
 
     leadData = {
-      name:   document.getElementById('fName').value.trim(),
-      clinic: document.getElementById('fClinic').value.trim(),
-      handle: document.getElementById('fHandle').value.trim(),
-      email:  document.getElementById('fEmail').value.trim()
+      name:     document.getElementById('fName').value.trim(),
+      business: document.getElementById('fClinic').value.trim(),
+      handle:   document.getElementById('fHandle').value.trim(),
+      phone:    document.getElementById('fPhone').value.trim(),
+      email:    document.getElementById('fEmail').value.trim()
     };
 
     /* TODO: αποθήκευση των στοιχείων του βήματος 1 σε Formspree/backend
