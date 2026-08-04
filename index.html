@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ο Αόρατος Γραμματέας — AI απαντήσεις &amp; ραντεβού για επιχειρήσεις, 24/7</title>
-<meta name="description" content="AI chatbot που απαντάει σε κάθε μήνυμα στο site, στο Instagram και στο Facebook της επιχείρησής σου — και κλείνει ραντεβού αυτόματα. 78 νέα ραντεβού σε 30 μέρες.">
+<meta name="description" content="AI chatbot που απαντάει σε κάθε μήνυμα σε site chat, Instagram ή/και Facebook — όποιο κανάλι χρησιμοποιεί ήδη η επιχείρησή σου — και κλείνει ραντεβού αυτόματα. 78 νέα ραντεβού σε 30 μέρες.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -397,6 +397,45 @@ section{padding:var(--sec-pad) 0}
   font-size:16px;
   font-weight:600;
   margin-bottom:22px;
+}
+.channel-toggles{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:26px;
+}
+.channel-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:0.04em;
+  color:var(--ink-dim);
+  background:var(--bg-raised-2);
+  border:1px solid var(--hairline);
+  border-radius:999px;
+  padding:9px 18px;
+  transition:color .18s ease, border-color .18s ease, background .18s ease;
+}
+.channel-toggle input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.channel-toggle .tick{display:none}
+.channel-toggle:has(input:checked){
+  color:var(--gold-bright);
+  border-color:rgba(201,162,75,0.55);
+  background:rgba(201,162,75,0.10);
+}
+.channel-toggle:has(input:checked) .tick{display:inline}
+.channel-toggle:has(input:focus-visible){
+  outline:2px solid var(--gold-bright);
+  outline-offset:3px;
 }
 .slider-row{
   display:flex;
@@ -885,7 +924,7 @@ input[type="range"]::-moz-range-thumb{
       <span class="eyebrow">Για μικρές &amp; μεσαίες επιχειρήσεις</span>
       <h1>Φέραμε <em>78 νέα ραντεβού σε 30 μέρες</em> από μηνύματα που θα έμεναν αναπάντητα.</h1>
       <p class="hero-tagline">Όποιος απαντάει πρώτος, κλείνει τον πελάτη.</p>
-      <p class="hero-sub">Τα μηνύματα που μένουν αναπάντητα στο Instagram και στο Facebook δεν περιμένουν. Ο πελάτης γράφει στην επόμενη επιχείρηση της λίστας — αυτήν που απάντησε πρώτη.</p>
+      <p class="hero-sub">Τα μηνύματα που μένουν αναπάντητα — στο site chat, στο Instagram ή στο Facebook — δεν περιμένουν. Ο πελάτης γράφει στην επόμενη επιχείρηση της λίστας — αυτήν που απάντησε πρώτη.</p>
       <div class="hero-cta-row">
         <a class="btn" href="#apply">Κάνε αίτηση για να σου εγκαταστήσουμε το σύστημα και στη δική σου επιχείρηση. <span class="arrow" aria-hidden="true">→</span></a>
         <p class="hero-note">78 νέα ραντεβού σε 30 μέρες — πραγματικό case study</p>
@@ -949,7 +988,19 @@ input[type="range"]::-moz-range-thumb{
     <p class="section-sub">Σύρε τον δείκτη και δες τι σου κοστίζουν τα αναπάντητα μηνύματα — σε ραντεβού και σε έσοδα.</p>
 
     <div class="calc-card">
-      <label class="calc-label" for="msgSlider">Πόσα μηνύματα μένουν αναπάντητα την εβδομάδα εκτός ωραρίου;</label>
+      <div class="channel-toggles" role="group" aria-label="Κανάλια μηνυμάτων">
+        <label class="channel-toggle">
+          <input type="checkbox" id="chSite" checked>
+          <span class="tick" aria-hidden="true">✓</span>
+          <span>Site chat</span>
+        </label>
+        <label class="channel-toggle">
+          <input type="checkbox" id="chSocial" checked>
+          <span class="tick" aria-hidden="true">✓</span>
+          <span>Social media (Instagram + Facebook)</span>
+        </label>
+      </div>
+      <label class="calc-label" id="msgLabel" for="msgSlider">Πόσα μηνύματα μένουν αναπάντητα την εβδομάδα (site + social) εκτός ωραρίου;</label>
       <div class="slider-row">
         <input type="range" id="msgSlider" min="10" max="500" step="5" value="60"
                aria-describedby="calcFine">
@@ -1033,7 +1084,7 @@ input[type="range"]::-moz-range-thumb{
       <article class="mech-card">
         <span class="mech-tag">Γρανάζι 01</span>
         <h3>Μηχανισμός Άμεσης Απάντησης</h3>
-        <p>Απαντάει σε κάθε μήνυμα οποιαδήποτε στιγμή της ημέρας — στις 11 το πρωί ή στις 11:39 το βράδυ — χωρίς να σηκώσεις εσύ το χέρι. Στο chat του site, στο Instagram και στο Facebook, σε φυσικά ελληνικά, εκπαιδευμένο στα δεδομένα της δικής σου επιχείρησης.</p>
+        <p>Απαντάει σε κάθε μήνυμα οποιαδήποτε στιγμή της ημέρας — στις 11 το πρωί ή στις 11:39 το βράδυ — χωρίς να σηκώσεις εσύ το χέρι. Σε site chat, Instagram ή/και Facebook — όποιο χρησιμοποιείς ήδη — σε φυσικά ελληνικά, εκπαιδευμένο στα δεδομένα της δικής σου επιχείρησης.</p>
         <p>Και σταματάει την ίδια ερώτηση να απαντιέται 50 φορές την ημέρα: ωράριο, τιμές, διαθεσιμότητα — τα αναλαμβάνει όλα. Όταν ένα ερώτημα είναι σύνθετο ή εξειδικευμένο, δεν αυτοσχεδιάζει — το προωθεί σε άνθρωπο της ομάδας σου.</p>
         <span class="handoff">↗ Human Handoff για σύνθετα ερωτήματα</span>
       </article>
@@ -1062,7 +1113,7 @@ input[type="range"]::-moz-range-thumb{
       <div class="proof-stats">
         <div class="proof-stat">
           <div class="num">24/7</div>
-          <div class="lbl">διαθεσιμότητα σε site, Instagram και Facebook — και τα μεσάνυχτα, και τις αργίες</div>
+          <div class="lbl">διαθεσιμότητα σε όποιο κανάλι χρησιμοποιείς ήδη — site chat, Instagram, Facebook — και τα μεσάνυχτα, και τις αργίες</div>
         </div>
         <div class="proof-stat">
           <div class="num">&lt;10 δευτ.</div>
@@ -1118,7 +1169,7 @@ input[type="range"]::-moz-range-thumb{
           <span class="icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a">
-          <div class="faq-a-inner">Δεν χρειάζεται να το στήσεις εσύ. Είναι Done-For-You: εμείς το συνδέουμε με το site, το Instagram και το Facebook σου, εμείς το εκπαιδεύουμε στα δεδομένα σου. Από εσένα χρειαζόμαστε ένα onboarding call — τίποτα άλλο.</div>
+          <div class="faq-a-inner">Δεν χρειάζεται να το στήσεις εσύ. Είναι Done-For-You: εμείς το συνδέουμε με όποιο κανάλι χρησιμοποιείς ήδη — site chat, Instagram, Facebook — εμείς το εκπαιδεύουμε στα δεδομένα σου. Από εσένα χρειαζόμαστε ένα onboarding call — τίποτα άλλο.</div>
         </div>
       </div>
       <div class="faq-item">
@@ -1161,7 +1212,7 @@ input[type="range"]::-moz-range-thumb{
       <div class="tl-item">
         <span class="tl-day">Ημέρες 2–5</span>
         <h3>Σύνδεση &amp; εκπαίδευση</h3>
-        <p>Συνδέουμε το chatbot με το site chat, Instagram και Facebook, και το εκπαιδεύουμε πάνω στη βάση δεδομένων σου.</p>
+        <p>Συνδέουμε το chatbot με τα κανάλια που χρησιμοποιείς ήδη — site chat, Instagram ή/και Facebook — και το εκπαιδεύουμε πάνω στη βάση δεδομένων σου.</p>
       </div>
       <div class="tl-item">
         <span class="tl-day">Ημέρα 6</span>
@@ -1313,6 +1364,34 @@ input[type="range"]::-moz-range-thumb{
   aovSlider.addEventListener('input', update);
   freqSlider.addEventListener('input', update);
   update();
+
+  /* ---- channel toggles: μόνο το label αλλάζει, όχι οι υπολογισμοί ---- */
+  var chSite   = document.getElementById('chSite');
+  var chSocial = document.getElementById('chSocial');
+  var msgLabel = document.getElementById('msgLabel');
+
+  function updateChannelLabel(){
+    if(chSite.checked && chSocial.checked){
+      msgLabel.textContent = 'Πόσα μηνύματα μένουν αναπάντητα την εβδομάδα (site + social) εκτός ωραρίου;';
+    }else if(chSite.checked){
+      msgLabel.textContent = 'Πόσα μηνύματα μένουν αναπάντητα στο site chat την εβδομάδα εκτός ωραρίου;';
+    }else{
+      msgLabel.textContent = 'Πόσα μηνύματα μένουν αναπάντητα στο Instagram/Facebook την εβδομάδα εκτός ωραρίου;';
+    }
+  }
+
+  function onToggle(e){
+    /* τουλάχιστον ένα κανάλι πάντα ενεργό: αν το uncheck αφήνει μηδέν
+       επιλογές, ακύρωσέ το */
+    if(!chSite.checked && !chSocial.checked){
+      e.target.checked = true;
+      return;
+    }
+    updateChannelLabel();
+  }
+
+  chSite.addEventListener('change', onToggle);
+  chSocial.addEventListener('change', onToggle);
 })();
 
 /* ============================================================
