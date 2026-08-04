@@ -326,17 +326,14 @@ section{padding:var(--sec-pad) 0}
   background:var(--bg-raised);
   border:1px solid var(--hairline);
   border-radius:var(--radius);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
   overflow:hidden;
 }
-.vsl-box::before{
-  content:"";
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at center,rgba(201,162,75,0.08),transparent 65%);
+.vsl-box iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  border-radius:var(--radius);
+  display:block;
 }
 .play-icon{
   width:84px;height:84px;
@@ -932,10 +929,12 @@ input[type="range"]::-moz-range-thumb{
      ============================================================ -->
 <section class="vsl" aria-label="Βίντεο παρουσίασης">
   <div class="wrap">
-    <!-- Το VSL βίντεο θα προστεθεί εδώ αργότερα -->
     <div class="vsl-box">
-      <div class="play-icon" aria-hidden="true"></div>
-      <div class="vsl-label">Placeholder — VSL έρχεται σύντομα</div>
+      <iframe src="https://www.youtube.com/embed/DkAkrLNouX4"
+              title="Ο Αόρατος Γραμματέας — δες πώς λειτουργεί το σύστημα"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy"></iframe>
     </div>
   </div>
 </section>
