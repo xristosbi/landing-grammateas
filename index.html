@@ -168,10 +168,9 @@ section{padding:var(--sec-pad) 0}
    ============================================================ */
 .hero{padding:clamp(60px,9vw,110px) 0 var(--sec-pad)}
 .hero-grid{
-  display:grid;
-  grid-template-columns:1.15fr 0.85fr;
-  gap:64px;
-  align-items:center;
+  max-width:780px;
+  margin:0 auto;
+  text-align:center;
 }
 .hero h1{
   font-size:clamp(38px,5.2vw,68px);
@@ -193,11 +192,12 @@ section{padding:var(--sec-pad) 0}
   color:var(--ink-dim);
   font-size:18px;
   max-width:520px;
-  margin-bottom:36px;
+  margin:0 auto 36px;
 }
 .hero-cta-row{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:22px;
   flex-wrap:wrap;
 }
@@ -217,10 +217,14 @@ section{padding:var(--sec-pad) 0}
   padding:20px;
   max-width:400px;
   width:100%;
-  margin-left:auto;
+  margin:0 auto;
   box-shadow:0 30px 80px rgba(0,0,0,0.45);
   position:relative;
 }
+/* τα bubbles ξεκινούν παγωμένα· το JS δίνει .play όταν το mockup
+   μπει στο viewport, ώστε το staggered animation να φαίνεται */
+.phone .bubble,.phone .chip-booked{animation-play-state:paused}
+.phone.play .bubble,.phone.play .chip-booked{animation-play-state:running}
 .phone-head{
   display:flex;
   align-items:center;
@@ -598,6 +602,19 @@ input[type="range"]::-moz-range-thumb{
   border-radius:999px;
   padding:7px 14px;
 }
+.mech-demo{
+  margin-top:64px;
+}
+.mech-demo-caption{
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+  text-align:center;
+  margin-bottom:26px;
+}
 
 /* ============================================================
    PROOF STRIP
@@ -869,8 +886,6 @@ input[type="range"]::-moz-range-thumb{
 @media (max-width:960px){
   section{padding:72px 0}
   .hero{padding-top:48px}
-  .hero-grid{grid-template-columns:1fr;gap:52px}
-  .phone{margin:0 auto}
   .pain-grid{grid-template-columns:1fr}
   .mech-grid{grid-template-columns:1fr}
   .proof-inner{grid-template-columns:1fr;gap:48px}
@@ -928,36 +943,6 @@ input[type="range"]::-moz-range-thumb{
       <div class="hero-cta-row">
         <a class="btn" href="#apply">Κάνε αίτηση για να σου εγκαταστήσουμε το σύστημα και στη δική σου επιχείρηση. <span class="arrow" aria-hidden="true">→</span></a>
         <p class="hero-note">78 νέα ραντεβού σε 30 μέρες — πραγματικό case study</p>
-      </div>
-    </div>
-
-    <!-- phone / DM mockup -->
-    <div class="phone" role="img" aria-label="Παράδειγμα συνομιλίας: πελάτης στέλνει μήνυμα στις 23:47, το AI απαντά σε 6 δευτερόλεπτα και κλείνει ραντεβού αυτόματα.">
-      <div class="phone-head">
-        <div class="phone-avatar" aria-hidden="true">ΕΣ</div>
-        <div>
-          <div class="phone-title">Η Επιχείρησή σου</div>
-          <div class="phone-status"><span class="dot-online"></span> online — απαντά τώρα</div>
-        </div>
-      </div>
-      <div class="thread" aria-hidden="true">
-        <div class="bubble bubble--patient b1">
-          Γεια σας, έχετε διαθεσιμότητα αύριο; Θα ήθελα ραντεβού.
-          <span class="stamp">Πελάτης · 23:47</span>
-        </div>
-        <div class="bubble bubble--ai b2">
-          Καλησπέρα! Ναι, αύριο έχουμε ελεύθερες ώρες. Προτιμάτε πρωί ή απόγευμα;
-          <span class="stamp">AI · 23:47 — απάντηση σε 6 δευτ.</span>
-        </div>
-        <div class="bubble bubble--patient b3">
-          Πρωί, αν γίνεται
-          <span class="stamp">Πελάτης · 23:48</span>
-        </div>
-        <div class="bubble bubble--ai b4">
-          Αύριο 10:30 ✓ Σας κράτησα τη θέση.
-          <span class="stamp">AI · 23:48</span>
-        </div>
-        <div class="chip-booked b5">📅 ραντεβού κλεισμένο αυτόματα</div>
       </div>
     </div>
   </div>
@@ -1095,6 +1080,39 @@ input[type="range"]::-moz-range-thumb{
         <p>Εσύ αποφασίζεις τη ροή. Το σύστημα προσαρμόζεται στον τρόπο δουλειάς σου — όχι το αντίστροφο.</p>
         <span class="handoff">✓ Κανένα μήνυμα δεν μένει αναπάντητο</span>
       </article>
+    </div>
+
+    <!-- phone / DM mockup -->
+    <div class="mech-demo">
+      <p class="mech-demo-caption">Έτσι απαντάει σε πραγματικό χρόνο</p>
+      <div class="phone" role="img" aria-label="Παράδειγμα συνομιλίας: πελάτης στέλνει μήνυμα στις 23:47, το AI απαντά σε 6 δευτερόλεπτα και κλείνει ραντεβού αυτόματα.">
+        <div class="phone-head">
+          <div class="phone-avatar" aria-hidden="true">ΕΣ</div>
+          <div>
+            <div class="phone-title">Η Επιχείρησή σου</div>
+            <div class="phone-status"><span class="dot-online"></span> online — απαντά τώρα</div>
+          </div>
+        </div>
+        <div class="thread" aria-hidden="true">
+          <div class="bubble bubble--patient b1">
+            Γεια σας, έχετε διαθεσιμότητα αύριο; Θα ήθελα ραντεβού.
+            <span class="stamp">Πελάτης · 23:47</span>
+          </div>
+          <div class="bubble bubble--ai b2">
+            Καλησπέρα! Ναι, αύριο έχουμε ελεύθερες ώρες. Προτιμάτε πρωί ή απόγευμα;
+            <span class="stamp">AI · 23:47 — απάντηση σε 6 δευτ.</span>
+          </div>
+          <div class="bubble bubble--patient b3">
+            Πρωί, αν γίνεται
+            <span class="stamp">Πελάτης · 23:48</span>
+          </div>
+          <div class="bubble bubble--ai b4">
+            Αύριο 10:30 ✓ Σας κράτησα τη θέση.
+            <span class="stamp">AI · 23:48</span>
+          </div>
+          <div class="chip-booked b5">📅 ραντεβού κλεισμένο αυτόματα</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1392,6 +1410,30 @@ input[type="range"]::-moz-range-thumb{
 
   chSite.addEventListener('change', onToggle);
   chSocial.addEventListener('change', onToggle);
+})();
+
+/* ============================================================
+   PHONE MOCKUP — εκκίνηση animation όταν μπει στο viewport
+   ============================================================ */
+(function(){
+  var phone = document.querySelector('.phone');
+  if(!phone) return;
+
+  if(!('IntersectionObserver' in window)){
+    phone.classList.add('play');
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        phone.classList.add('play');
+        observer.disconnect();
+      }
+    });
+  }, {threshold:0.35});
+
+  observer.observe(phone);
 })();
 
 /* ============================================================
