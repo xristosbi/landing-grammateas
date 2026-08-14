@@ -389,13 +389,13 @@ section{padding:var(--sec-pad) 0}
   font-weight:600;
   margin-bottom:22px;
 }
-.channel-toggles{
+.response-toggles{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
-  margin-bottom:26px;
+  margin-bottom:34px;
 }
-.channel-toggle{
+.response-toggle{
   display:inline-flex;
   align-items:center;
   gap:8px;
@@ -412,22 +412,103 @@ section{padding:var(--sec-pad) 0}
   padding:9px 18px;
   transition:color .18s ease, border-color .18s ease, background .18s ease;
 }
-.channel-toggle input{
+.response-toggle input{
   position:absolute;
   opacity:0;
   pointer-events:none;
 }
-.channel-toggle .tick{display:none}
-.channel-toggle:has(input:checked){
+.response-toggle:has(input:checked){
   color:var(--gold-bright);
   border-color:rgba(201,162,75,0.55);
   background:rgba(201,162,75,0.10);
 }
-.channel-toggle:has(input:checked) .tick{display:inline}
-.channel-toggle:has(input:focus-visible){
+.response-toggle:has(input:focus-visible){
   outline:2px solid var(--gold-bright);
   outline-offset:3px;
 }
+
+/* ---- tabs ---- */
+.calc-tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--hairline);
+  padding-top:32px;
+  margin-top:8px;
+  margin-bottom:28px;
+}
+.calc-tab{
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  color:var(--ink-dim);
+  background:var(--bg-raised-2);
+  border:1px solid var(--hairline);
+  border-radius:999px;
+  padding:11px 20px;
+  cursor:pointer;
+  transition:color .18s ease, border-color .18s ease, background .18s ease;
+}
+.calc-tab.is-active{
+  color:var(--gold-bright);
+  border-color:rgba(201,162,75,0.55);
+  background:rgba(201,162,75,0.10);
+}
+.calc-panel{display:none}
+.calc-panel.is-active{display:block}
+
+.calc-result.calc-result--pain{border-top:3px solid var(--wine-bright)}
+.calc-result.calc-result--pain .num{color:var(--wine-bright)}
+.calc-result.calc-result--dream{border-top:3px solid var(--sage-bright)}
+.calc-result.calc-result--dream .num{color:var(--sage-bright)}
+
+.calc-stats-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:24px;
+}
+.calc-stat{
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  color:var(--sage-bright);
+  background:rgba(76,140,116,0.10);
+  border:1px solid rgba(107,175,147,0.28);
+  border-radius:var(--radius);
+  padding:14px 16px;
+  line-height:1.5;
+}
+
+.gap-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.gap-col{
+  border-radius:var(--radius);
+  border:1px solid var(--hairline);
+  background:var(--bg-raised-2);
+  padding:26px 24px;
+}
+.gap-col h4{
+  font-family:var(--font-serif);
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:16px;
+}
+.gap-col p{
+  font-size:14.5px;
+  color:var(--ink-dim);
+  padding:10px 0;
+  border-top:1px solid var(--hairline);
+}
+.gap-col p:first-of-type{border-top:none;padding-top:0}
+.gap-col--bad{border-top:3px solid var(--wine-bright)}
+.gap-col--bad h4{color:var(--wine-bright)}
+.gap-col--good{border-top:3px solid var(--sage-bright)}
+.gap-col--good h4{color:var(--sage-bright)}
+
 .slider-row{
   display:flex;
   align-items:center;
@@ -880,6 +961,8 @@ input[type="range"]::-moz-range-thumb{
   .proof-stats{grid-template-columns:1fr;gap:26px}
   .apply-grid{grid-template-columns:1fr;gap:44px}
   .calc-results{grid-template-columns:1fr}
+  .calc-stats-row{grid-template-columns:1fr}
+  .gap-grid{grid-template-columns:1fr}
 }
 @media (max-width:540px){
   .brand-name{font-size:14.5px}
@@ -959,58 +1042,101 @@ input[type="range"]::-moz-range-thumb{
     <p class="section-sub">Σύρε τον δείκτη και δες τι σου κοστίζουν τα αναπάντητα μηνύματα — σε ραντεβού και σε έσοδα.</p>
 
     <div class="calc-card">
-      <div class="channel-toggles" role="group" aria-label="Κανάλια μηνυμάτων">
-        <label class="channel-toggle">
-          <input type="checkbox" id="chSite" checked>
-          <span class="tick" aria-hidden="true">✓</span>
-          <span>Site chat</span>
-        </label>
-        <label class="channel-toggle">
-          <input type="checkbox" id="chSocial" checked>
-          <span class="tick" aria-hidden="true">✓</span>
-          <span>Social media (Instagram + Facebook)</span>
-        </label>
-      </div>
-      <label class="calc-label" id="msgLabel" for="msgSlider">Πόσα μηνύματα μένουν αναπάντητα την εβδομάδα (site + social) εκτός ωραρίου;</label>
+      <label class="calc-label" for="msgSlider">Πόσα μηνύματα/DMs/leads λαμβάνεις την εβδομάδα (site, Instagram, Facebook);</label>
       <div class="slider-row">
-        <input type="range" id="msgSlider" min="10" max="500" step="5" value="60"
+        <input type="range" id="msgSlider" min="10" max="200" step="5" value="40"
                aria-describedby="calcFine">
-        <output class="slider-value" id="msgValue" for="msgSlider">60</output>
+        <output class="slider-value" id="msgValue" for="msgSlider">40</output>
       </div>
 
-      <label class="calc-label" for="aovSlider">Μέσος όρος αξίας παραγγελίας/επίσκεψης (AOV)</label>
+      <label class="calc-label">Μέσος χρόνος απόκρισης στα μηνύματα σήμερα;</label>
+      <div class="response-toggles" role="radiogroup" aria-label="Μέσος χρόνος απόκρισης στα μηνύματα σήμερα">
+        <label class="response-toggle">
+          <input type="radio" name="responseTime" id="rtFast" value="0">
+          <span>&lt;5 λεπτά</span>
+        </label>
+        <label class="response-toggle">
+          <input type="radio" name="responseTime" id="rtMed" value="0.40" checked>
+          <span>1-3 ώρες</span>
+        </label>
+        <label class="response-toggle">
+          <input type="radio" name="responseTime" id="rtSlow" value="0.65">
+          <span>4+ ώρες / επόμενη μέρα</span>
+        </label>
+      </div>
+
+      <label class="calc-label" for="aovSlider">Μέση αξία πελάτη/ραντεβού (AOV);</label>
       <div class="slider-row">
-        <input type="range" id="aovSlider" min="60" max="500" step="10" value="120"
+        <input type="range" id="aovSlider" min="50" max="500" step="10" value="120"
                aria-describedby="calcFine">
         <output class="slider-value" id="aovValue" for="aovSlider">€120</output>
       </div>
 
-      <label class="calc-label" for="freqSlider">Πόσες φορές το χρόνο ξαναγοράζει ένας πελάτης σου;</label>
-      <div class="slider-row">
-        <input type="range" id="freqSlider" min="1" max="12" step="1" value="3"
-               aria-describedby="calcFine">
-        <output class="slider-value" id="freqValue" for="freqSlider">3×</output>
+      <div class="calc-tabs" role="tablist" aria-label="Προβολή αποτελεσμάτων">
+        <button type="button" class="calc-tab is-active" id="tab1Btn" role="tab" aria-selected="true" aria-controls="tab1Panel">Η ΣΗΜΕΡΙΝΗ ΚΑΤΑΣΤΑΣΗ</button>
+        <button type="button" class="calc-tab" id="tab2Btn" role="tab" aria-selected="false" aria-controls="tab2Panel" tabindex="-1">Η ΙΔΑΝΙΚΗ ΚΑΤΑΣΤΑΣΗ ΜΕ AI 24/7</button>
+        <button type="button" class="calc-tab" id="tab3Btn" role="tab" aria-selected="false" aria-controls="tab3Panel" tabindex="-1">ΧΩΡΙΣ VS ΜΕ ΣΥΣΤΗΜΑ</button>
       </div>
 
-      <div class="calc-results" aria-live="polite">
-        <div class="calc-result">
-          <div class="num" id="lostAppts">—</div>
-          <div class="lbl">χαμένα ραντεβού / μήνα</div>
-        </div>
-        <div class="calc-result">
-          <div class="num" id="lostRevenue">—</div>
-          <div class="lbl">χαμένα έσοδα / μήνα</div>
-        </div>
-        <div class="calc-result">
-          <div class="num" id="lostAnnual">—</div>
-          <div class="lbl">χαμένα έσοδα / χρόνο</div>
-        </div>
-        <div class="calc-result">
-          <div class="num" id="lostLTV">—</div>
-          <div class="lbl">χαμένη αξία πελατών (Lifetime Value)</div>
+      <div class="calc-panel is-active" id="tab1Panel" role="tabpanel" aria-labelledby="tab1Btn">
+        <div class="calc-results" aria-live="polite">
+          <div class="calc-result calc-result--pain">
+            <div class="num" id="lostAppts">—</div>
+            <div class="lbl">❌ Χαμένα ραντεβού / μήνα</div>
+          </div>
+          <div class="calc-result calc-result--pain">
+            <div class="num" id="lostRevenueMonth">—</div>
+            <div class="lbl">❌ Χαμένα έσοδα / μήνα</div>
+          </div>
+          <div class="calc-result calc-result--pain">
+            <div class="num" id="lostRevenueYear">—</div>
+            <div class="lbl">❌ Ετήσια απώλεια τζίρου</div>
+          </div>
         </div>
       </div>
-      <p class="calc-fine" id="calcFine">~25% μετατροπή μηνύματος σε ραντεβού. Πρόσαρμοσε το AOV και τη συχνότητα επαναγοράς στα δικά σου νούμερα για να δεις την πραγματική ετήσια απώλεια.</p>
+
+      <div class="calc-panel" id="tab2Panel" role="tabpanel" aria-labelledby="tab2Btn" hidden>
+        <div class="calc-stats-row">
+          <div class="calc-stat">⚡ Χρόνος απόκρισης: 5 δευτερόλεπτα, 24/7/365</div>
+          <div class="calc-stat">🤖 Αυτόματη κράτηση στο ημερολόγιο: 100% αυτόματα</div>
+          <div class="calc-stat">📈 Ανάκτηση χαμένων ραντεβού: 80%</div>
+        </div>
+        <div class="calc-results" aria-live="polite">
+          <div class="calc-result calc-result--dream">
+            <div class="num" id="recoveredAppts">—</div>
+            <div class="lbl">✅ Νέα κλεισμένα ραντεβού / μήνα</div>
+          </div>
+          <div class="calc-result calc-result--dream">
+            <div class="num" id="extraRevenueMonth">—</div>
+            <div class="lbl">💰 Επιπλέον καθαρό έσοδο / μήνα</div>
+          </div>
+          <div class="calc-result calc-result--dream">
+            <div class="num" id="extraRevenueYear">—</div>
+            <div class="lbl">💰 Επιπλέον έσοδο / χρόνο</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-panel" id="tab3Panel" role="tabpanel" aria-labelledby="tab3Btn" hidden>
+        <div class="gap-grid">
+          <div class="gap-col gap-col--bad">
+            <h4>Χωρίς Σύστημα</h4>
+            <p>❌ Χάνεις <strong id="gapLostRevenueMonth">—</strong>/μήνα σε πελάτες που πάνε αλλού</p>
+            <p>❌ Απαντάς με ώρες καθυστέρηση</p>
+            <p>❌ Χάνεις leads Σαββατοκύριακα &amp; βράδια</p>
+            <p>❌ <strong id="gapLostAppts">—</strong> χαμένα ραντεβού/μήνα</p>
+          </div>
+          <div class="gap-col gap-col--good">
+            <h4>Η Άμεση Απάντηση</h4>
+            <p>✅ Κλειδώνεις <strong id="gapExtraRevenueMonth">—</strong>/μήνα νέο τζίρο</p>
+            <p>✅ Απαντάει σε 5″ και κλείνει μόνο του το ραντεβού</p>
+            <p>✅ Δουλεύει 24/7 ακόμα κι όταν κοιμάσαι</p>
+            <p>✅ <strong id="gapRecoveredAppts">—</strong> ανακτημένα ραντεβού/μήνα</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="calc-fine" id="calcFine">Εκτίμηση βάσει ~25% μετατροπή μηνύματος σε ραντεβού (αν απαντούσες αμέσως) και ~80% ανάκτηση χαμένων ραντεβού με το σύστημα. Πρόσαρμοσε τα inputs στα δικά σου νούμερα.</p>
     </div>
   </div>
 </section>
@@ -1312,24 +1438,36 @@ input[type="range"]::-moz-range-thumb{
 
 <script>
 /* ============================================================
-   CALCULATOR — "Το κόστος της σιωπής"
-   lost appointments/month = μηνύματα/εβδομάδα × 0.25 × 4.33
-   lost revenue/month      = lost appointments × AOV (slider B)
-   lost revenue/year       = lost revenue/month × 12
-   lost customer LTV       = lost revenue/year × συχνότητα
-                             επαναγοράς/χρόνο (slider C)
+   CALCULATOR — "Το κόστος της σιωπής" (3-tab)
+   baseConversionRate      = 0.25  (μηνύματα → ραντεβού, αν απαντούσες αμέσως)
+   lostAppointmentsMonth   = round(μηνύματα/εβδ × 4.33 × 0.25 × lossFactor)
+   lostRevenueMonth        = lostAppointmentsMonth × AOV
+   lostRevenueYear         = lostRevenueMonth × 12
+   recoveryRate            = 0.80  (ανάκτηση με 5" response time)
+   recoveredAppointmentsMonth = round(lostAppointmentsMonth × recoveryRate)
+   extraRevenueMonth       = recoveredAppointmentsMonth × AOV
    ============================================================ */
 (function(){
-  var msgSlider  = document.getElementById('msgSlider');
-  var aovSlider  = document.getElementById('aovSlider');
-  var freqSlider = document.getElementById('freqSlider');
-  var msgOut  = document.getElementById('msgValue');
-  var aovOut  = document.getElementById('aovValue');
-  var freqOut = document.getElementById('freqValue');
-  var apptsEl  = document.getElementById('lostAppts');
-  var revEl    = document.getElementById('lostRevenue');
-  var annualEl = document.getElementById('lostAnnual');
-  var ltvEl    = document.getElementById('lostLTV');
+  var baseConversionRate = 0.25;
+  var recoveryRate = 0.80;
+
+  var msgSlider = document.getElementById('msgSlider');
+  var aovSlider = document.getElementById('aovSlider');
+  var msgOut = document.getElementById('msgValue');
+  var aovOut = document.getElementById('aovValue');
+  var responseRadios = document.querySelectorAll('input[name="responseTime"]');
+
+  var lostApptsEl        = document.getElementById('lostAppts');
+  var lostRevenueMonthEl = document.getElementById('lostRevenueMonth');
+  var lostRevenueYearEl  = document.getElementById('lostRevenueYear');
+  var recoveredApptsEl   = document.getElementById('recoveredAppts');
+  var extraRevenueMonthEl= document.getElementById('extraRevenueMonth');
+  var extraRevenueYearEl = document.getElementById('extraRevenueYear');
+
+  var gapLostRevenueMonthEl   = document.getElementById('gapLostRevenueMonth');
+  var gapLostApptsEl          = document.getElementById('gapLostAppts');
+  var gapExtraRevenueMonthEl  = document.getElementById('gapExtraRevenueMonth');
+  var gapRecoveredApptsEl     = document.getElementById('gapRecoveredAppts');
 
   function euro(n){
     return '€' + Math.round(n).toLocaleString('el-GR');
@@ -1341,61 +1479,74 @@ input[type="range"]::-moz-range-thumb{
     slider.style.setProperty('--fill', pct + '%');
   }
 
+  function getLossFactor(){
+    var checked = document.querySelector('input[name="responseTime"]:checked');
+    return checked ? parseFloat(checked.value) : 0.40;
+  }
+
   function update(){
-    var perWeek = parseInt(msgSlider.value, 10);
-    var aov     = parseInt(aovSlider.value, 10);
-    var freq    = parseInt(freqSlider.value, 10);
+    var weeklyMessages = parseInt(msgSlider.value, 10);
+    var aov = parseInt(aovSlider.value, 10);
+    var lossFactor = getLossFactor();
 
-    var lostAppts = perWeek * 0.25 * 4.33;
-    var lostRevenue = lostAppts * aov;
-    var lostAnnual = lostRevenue * 12;
-    var lostLTV = lostAnnual * freq;
+    var lostAppointmentsMonth = Math.round(weeklyMessages * 4.33 * baseConversionRate * lossFactor);
+    var lostRevenueMonth = lostAppointmentsMonth * aov;
+    var lostRevenueYear = lostRevenueMonth * 12;
 
-    msgOut.textContent = perWeek;
+    var recoveredAppointmentsMonth = Math.round(lostAppointmentsMonth * recoveryRate);
+    var extraRevenueMonth = recoveredAppointmentsMonth * aov;
+    var extraRevenueYear = extraRevenueMonth * 12;
+
+    msgOut.textContent = weeklyMessages;
     aovOut.textContent = '€' + aov;
-    freqOut.textContent = freq + '×';
-    apptsEl.textContent = Math.round(lostAppts);
-    revEl.textContent = euro(lostRevenue);
-    annualEl.textContent = euro(lostAnnual);
-    ltvEl.textContent = euro(lostLTV);
+
+    lostApptsEl.textContent = lostAppointmentsMonth;
+    lostRevenueMonthEl.textContent = euro(lostRevenueMonth);
+    lostRevenueYearEl.textContent = euro(lostRevenueYear);
+
+    recoveredApptsEl.textContent = recoveredAppointmentsMonth;
+    extraRevenueMonthEl.textContent = euro(extraRevenueMonth);
+    extraRevenueYearEl.textContent = euro(extraRevenueYear);
+
+    gapLostRevenueMonthEl.textContent = euro(lostRevenueMonth);
+    gapLostApptsEl.textContent = lostAppointmentsMonth;
+    gapExtraRevenueMonthEl.textContent = euro(extraRevenueMonth);
+    gapRecoveredApptsEl.textContent = recoveredAppointmentsMonth;
 
     fill(msgSlider);
     fill(aovSlider);
-    fill(freqSlider);
   }
 
   msgSlider.addEventListener('input', update);
   aovSlider.addEventListener('input', update);
-  freqSlider.addEventListener('input', update);
+  responseRadios.forEach(function(radio){
+    radio.addEventListener('change', update);
+  });
   update();
 
-  /* ---- channel toggles: μόνο το label αλλάζει, όχι οι υπολογισμοί ---- */
-  var chSite   = document.getElementById('chSite');
-  var chSocial = document.getElementById('chSocial');
-  var msgLabel = document.getElementById('msgLabel');
+  /* ---- tabs ---- */
+  var tabs = [
+    {btn: document.getElementById('tab1Btn'), panel: document.getElementById('tab1Panel')},
+    {btn: document.getElementById('tab2Btn'), panel: document.getElementById('tab2Panel')},
+    {btn: document.getElementById('tab3Btn'), panel: document.getElementById('tab3Panel')}
+  ];
 
-  function updateChannelLabel(){
-    if(chSite.checked && chSocial.checked){
-      msgLabel.textContent = 'Πόσα μηνύματα μένουν αναπάντητα την εβδομάδα (site + social) εκτός ωραρίου;';
-    }else if(chSite.checked){
-      msgLabel.textContent = 'Πόσα μηνύματα μένουν αναπάντητα στο site chat την εβδομάδα εκτός ωραρίου;';
-    }else{
-      msgLabel.textContent = 'Πόσα μηνύματα μένουν αναπάντητα στο Instagram/Facebook την εβδομάδα εκτός ωραρίου;';
-    }
+  function activateTab(target){
+    tabs.forEach(function(tab){
+      var isActive = tab === target;
+      tab.btn.classList.toggle('is-active', isActive);
+      tab.btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      tab.btn.tabIndex = isActive ? 0 : -1;
+      tab.panel.classList.toggle('is-active', isActive);
+      tab.panel.hidden = !isActive;
+    });
   }
 
-  function onToggle(e){
-    /* τουλάχιστον ένα κανάλι πάντα ενεργό: αν το uncheck αφήνει μηδέν
-       επιλογές, ακύρωσέ το */
-    if(!chSite.checked && !chSocial.checked){
-      e.target.checked = true;
-      return;
-    }
-    updateChannelLabel();
-  }
-
-  chSite.addEventListener('change', onToggle);
-  chSocial.addEventListener('change', onToggle);
+  tabs.forEach(function(tab){
+    tab.btn.addEventListener('click', function(){
+      activateTab(tab);
+    });
+  });
 })();
 
 /* ============================================================
