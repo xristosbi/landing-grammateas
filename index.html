@@ -427,15 +427,62 @@ section{padding:var(--sec-pad) 0}
   outline-offset:3px;
 }
 
+/* ---- message-volume helper ---- */
+.msg-helper{margin-bottom:30px}
+.msg-helper-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--gold-bright);
+  text-align:left;
+}
+.msg-helper-toggle .chevron{
+  display:inline-block;
+  transition:transform .2s ease;
+}
+.msg-helper-toggle[aria-expanded="true"] .chevron{
+  transform:rotate(90deg);
+}
+.msg-helper-panel{
+  margin-top:18px;
+  background:var(--bg-raised-2);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:26px 26px 28px;
+}
+.msg-helper-panel .calc-label{
+  font-size:14px;
+  margin-bottom:16px;
+}
+.msg-helper-panel .slider-row{
+  margin-bottom:26px;
+}
+.msg-helper-estimate{
+  font-family:var(--font-mono);
+  font-size:13.5px;
+  color:var(--ink-dim);
+  margin-bottom:18px;
+}
+.msg-helper-estimate strong{
+  color:var(--gold-bright);
+  font-size:16px;
+}
+
 /* ---- tabs ---- */
 .calc-tabs{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
-  border-top:1px solid var(--hairline);
-  padding-top:32px;
-  margin-top:8px;
-  margin-bottom:28px;
+  border-bottom:1px solid var(--hairline);
+  padding-bottom:28px;
+  margin-bottom:32px;
 }
 .calc-tab{
   font-family:var(--font-mono);
@@ -1042,6 +1089,35 @@ input[type="range"]::-moz-range-thumb{
     <p class="section-sub">Σύρε τον δείκτη και δες τι σου κοστίζουν τα αναπάντητα μηνύματα — σε ραντεβού και σε έσοδα.</p>
 
     <div class="calc-card">
+      <div class="calc-tabs" role="tablist" aria-label="Προβολή αποτελεσμάτων">
+        <button type="button" class="calc-tab is-active" id="tab1Btn" role="tab" aria-selected="true" aria-controls="tab1Panel">Η ΣΗΜΕΡΙΝΗ ΚΑΤΑΣΤΑΣΗ</button>
+        <button type="button" class="calc-tab" id="tab2Btn" role="tab" aria-selected="false" aria-controls="tab2Panel" tabindex="-1">Η ΙΔΑΝΙΚΗ ΚΑΤΑΣΤΑΣΗ ΜΕ AI 24/7</button>
+        <button type="button" class="calc-tab" id="tab3Btn" role="tab" aria-selected="false" aria-controls="tab3Panel" tabindex="-1">ΧΩΡΙΣ VS ΜΕ ΣΥΣΤΗΜΑ</button>
+      </div>
+
+      <div class="msg-helper">
+        <button type="button" class="msg-helper-toggle" id="msgHelperToggle" aria-expanded="false" aria-controls="msgHelperPanel">
+          <span class="chevron" aria-hidden="true">▸</span>
+          Δεν ξέρεις πόσα μηνύματα λαμβάνεις; Υπολόγισέ το από τις επισκέψεις σου
+        </button>
+        <div class="msg-helper-panel" id="msgHelperPanel" hidden>
+          <label class="calc-label" for="visitsSlider">Πόσες επισκέψεις έχει το site σου τον μήνα;</label>
+          <div class="slider-row">
+            <input type="range" id="visitsSlider" min="200" max="10000" step="100" value="2000">
+            <output class="slider-value" id="visitsValue" for="visitsSlider">2000</output>
+          </div>
+
+          <label class="calc-label" for="pctSlider">Τι ποσοστό επισκεπτών πιστεύεις ότι θα μιλούσε με το chatbot;</label>
+          <div class="slider-row">
+            <input type="range" id="pctSlider" min="5" max="25" step="1" value="12">
+            <output class="slider-value" id="pctValue" for="pctSlider">12%</output>
+          </div>
+
+          <p class="msg-helper-estimate">Εκτίμηση: ~<strong id="estimateOut">—</strong> μηνύματα/εβδομάδα</p>
+          <button type="button" class="btn btn--small" id="msgHelperApply">Χρησιμοποίησε αυτό</button>
+        </div>
+      </div>
+
       <label class="calc-label" for="msgSlider">Πόσα μηνύματα/DMs/leads λαμβάνεις την εβδομάδα (site, Instagram, Facebook);</label>
       <div class="slider-row">
         <input type="range" id="msgSlider" min="10" max="200" step="5" value="40"
@@ -1070,12 +1146,6 @@ input[type="range"]::-moz-range-thumb{
         <input type="range" id="aovSlider" min="50" max="500" step="10" value="120"
                aria-describedby="calcFine">
         <output class="slider-value" id="aovValue" for="aovSlider">€120</output>
-      </div>
-
-      <div class="calc-tabs" role="tablist" aria-label="Προβολή αποτελεσμάτων">
-        <button type="button" class="calc-tab is-active" id="tab1Btn" role="tab" aria-selected="true" aria-controls="tab1Panel">Η ΣΗΜΕΡΙΝΗ ΚΑΤΑΣΤΑΣΗ</button>
-        <button type="button" class="calc-tab" id="tab2Btn" role="tab" aria-selected="false" aria-controls="tab2Panel" tabindex="-1">Η ΙΔΑΝΙΚΗ ΚΑΤΑΣΤΑΣΗ ΜΕ AI 24/7</button>
-        <button type="button" class="calc-tab" id="tab3Btn" role="tab" aria-selected="false" aria-controls="tab3Panel" tabindex="-1">ΧΩΡΙΣ VS ΜΕ ΣΥΣΤΗΜΑ</button>
       </div>
 
       <div class="calc-panel is-active" id="tab1Panel" role="tabpanel" aria-labelledby="tab1Btn">
@@ -1523,6 +1593,50 @@ input[type="range"]::-moz-range-thumb{
     radio.addEventListener('change', update);
   });
   update();
+
+  /* ---- helper: εκτίμηση μηνυμάτων από επισκέψεις site ---- */
+  var msgHelperToggle = document.getElementById('msgHelperToggle');
+  var msgHelperPanel  = document.getElementById('msgHelperPanel');
+  var visitsSlider = document.getElementById('visitsSlider');
+  var pctSlider    = document.getElementById('pctSlider');
+  var visitsOut = document.getElementById('visitsValue');
+  var pctOut    = document.getElementById('pctValue');
+  var estimateOut = document.getElementById('estimateOut');
+  var msgHelperApply = document.getElementById('msgHelperApply');
+
+  msgHelperToggle.addEventListener('click', function(){
+    var expanded = msgHelperToggle.getAttribute('aria-expanded') === 'true';
+    msgHelperToggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    msgHelperPanel.hidden = expanded;
+  });
+
+  function updateEstimate(){
+    var visits = parseInt(visitsSlider.value, 10);
+    var pct = parseInt(pctSlider.value, 10);
+    var estimate = Math.round(visits * (pct / 100) / 4.33);
+
+    visitsOut.textContent = visits;
+    pctOut.textContent = pct + '%';
+    estimateOut.textContent = estimate;
+
+    fill(visitsSlider);
+    fill(pctSlider);
+
+    return estimate;
+  }
+
+  visitsSlider.addEventListener('input', updateEstimate);
+  pctSlider.addEventListener('input', updateEstimate);
+  updateEstimate();
+
+  msgHelperApply.addEventListener('click', function(){
+    var estimate = updateEstimate();
+    msgSlider.value = estimate;
+    msgSlider.dispatchEvent(new Event('input'));
+
+    msgHelperToggle.setAttribute('aria-expanded', 'false');
+    msgHelperPanel.hidden = true;
+  });
 
   /* ---- tabs ---- */
   var tabs = [
