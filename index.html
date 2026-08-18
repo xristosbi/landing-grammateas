@@ -867,6 +867,20 @@ section{padding:var(--sec-pad) 0}
             <div class="mcw2-input active" id="mcw2-group-weeklyMessages" onclick="mcw2SetField('weeklyMessages')">
               <div class="mcw2-label"><span>Μηνύματα/εβδομάδα</span><span class="mcw2-val" id="mcw2-val-weeklyMessages">40</span></div>
               <input type="range" min="10" max="200" value="40" step="1" id="mcw2-slider-weeklyMessages">
+
+              <div class="mcw2-msg-helper" id="mcw2-msg-helper" onclick="event.stopPropagation()">
+                <button type="button" class="mcw2-msg-helper-toggle" id="mcw2-msg-helper-toggle" aria-expanded="false" aria-controls="mcw2-msg-helper-panel">ⓘ Δεν ξέρεις; Υπολόγισέ το από τις επισκέψεις</button>
+                <div class="mcw2-msg-helper-panel" id="mcw2-msg-helper-panel">
+                  <div class="mcw2-label"><span>Επισκέψεις site/μήνα</span><span class="mcw2-val" id="mcw2-msg-visits-val">2000</span></div>
+                  <input type="range" min="200" max="10000" step="100" value="2000" id="mcw2-msg-visits-slider">
+
+                  <div class="mcw2-label"><span>Ποσοστό επισκεπτών που θα έγραφε μήνυμα</span><span class="mcw2-val" id="mcw2-msg-pct-val">12%</span></div>
+                  <input type="range" min="5" max="25" step="1" value="12" id="mcw2-msg-pct-slider">
+
+                  <p class="mcw2-msg-helper-estimate">Εκτίμηση: ~<strong id="mcw2-msg-estimate-val">—</strong> μηνύματα/εβδομάδα</p>
+                  <button type="button" class="mcw2-mini-btn" id="mcw2-msg-helper-apply">Χρησιμοποίησε αυτό</button>
+                </div>
+              </div>
             </div>
 
             <div class="mcw2-input" id="mcw2-group-responseMinutes" onclick="mcw2SetField('responseMinutes')">
@@ -981,6 +995,9 @@ section{padding:var(--sec-pad) 0}
 </section>
 
 <style>
+  #calc .wrap{padding:0 28px;}
+  @media(min-width:1401px){#calc .wrap{max-width:1600px;}}
+  @media(min-width:1024px) and (max-width:1400px){#calc .wrap{max-width:92vw;}}
   .mcw2{font-family:'Inter',sans-serif;}
   .mcw2-presets{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
   .mcw2-preset-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;color:var(--ink-faint);letter-spacing:.05em;}
@@ -1000,6 +1017,13 @@ section{padding:var(--sec-pad) 0}
   .mcw2-input.active .mcw2-val{color:var(--gold-bright);background:rgba(201,162,75,0.14);border-color:var(--gold);}
   .mcw2 input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--hairline);outline:none;margin:5px 0 2px;}
   .mcw2 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold-bright);cursor:pointer;}
+  .mcw2-msg-helper{position:relative;margin-top:8px;}
+  .mcw2-msg-helper-toggle{background:none;border:none;padding:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;color:var(--gold-bright);text-align:left;}
+  .mcw2-msg-helper-toggle:hover{text-decoration:underline;}
+  .mcw2-msg-helper-panel{display:none;margin-top:10px;background:var(--bg-raised-2);border:1px solid var(--hairline);border-radius:8px;padding:12px 12px 14px;cursor:default;}
+  .mcw2-msg-helper-panel.mcw2-open{display:block;}
+  .mcw2-msg-helper-estimate{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);margin:8px 0 10px;}
+  .mcw2-msg-helper-estimate strong{color:var(--gold-bright);font-size:13px;}
   .mcw2-ltv{margin-top:auto;background:rgba(201,162,75,0.05);border:1px dashed var(--gold);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;}
   .mcw2-ltv-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;}
   .mcw2-ltv-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--gold-bright);}
@@ -1055,12 +1079,14 @@ section{padding:var(--sec-pad) 0}
   const $ = id => document.getElementById(id);
   let activeTab='current', activeField='weeklyMessages', activeScenario='guess', isRevealed=false;
   let globalMargin=100;
+  let activeBuffer = '';
+  let isFreshInput = true;
 
   const state = {
     current: { weeklyMessages:40, responseMinutes:120, adspend:0, agency:0, hourly:15, hours:40 },
     opt: {
       guess:      { aov:120, lost:15, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
-      fika:       { aov:120, lost:35, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
+      fika:       { aov:120, lost:78, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
       breakeven:  { aov:120, lost:5,  frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 }
     }
   };
@@ -1117,14 +1143,45 @@ section{padding:var(--sec-pad) 0}
     document.querySelectorAll('.mcw2-input').forEach(g=>g.classList.remove('active'));
     const el=$('mcw2-group-'+k); if(el) el.classList.add('active');
     $('mcw2-keypad-target').innerText=fields[k].label;
+    activeBuffer = fields[k].el.value.toString();
+    isFreshInput = true;
   };
 
   window.mcw2PressKey = function(k){
     if(activeTab==='compare') return;
-    const f=fields[activeField]; let cur=parseFloat(f.el.value)||0;
-    if(k==='C'){ cur=f.min; } else if(k==='back'){ cur=Math.floor(cur/10); } else { cur=parseFloat((cur.toString()+k)); }
-    if(cur>f.max) cur=f.max; if(cur<f.min) cur=f.min;
-    f.el.value=cur; calc();
+    const f=fields[activeField];
+    if(k==='C'){
+      activeBuffer = f.min.toString();
+      isFreshInput = true;
+    } else if(k==='back'){
+      if(activeBuffer.length>1){
+        activeBuffer = activeBuffer.slice(0,-1);
+      } else {
+        activeBuffer = f.min.toString();
+        isFreshInput = true;
+      }
+    } else {
+      if(isFreshInput){
+        activeBuffer = k.toString();
+        isFreshInput = false;
+      } else {
+        activeBuffer = activeBuffer + k.toString();
+      }
+    }
+    let newVal = parseFloat(activeBuffer) || 0;
+    if(newVal>f.max){
+      /* runaway πάνω από το max: κόψε και το buffer, ώστε άλλο ψηφίο να μη
+         συνεχίσει να το μεγαλώνει άπειρα */
+      newVal=f.max;
+      activeBuffer = newVal.toString();
+    }
+    if(newVal<f.min){
+      /* κάτω από το min είναι φυσιολογική ενδιάμεση κατάσταση όσο ο χρήστης
+         χτίζει έναν πολυψήφιο αριθμό (π.χ. "5" πριν γίνει "50") — clamp μόνο
+         την τιμή του slider, όχι το buffer, αλλιώς κόβεται η πληκτρολόγηση */
+      newVal=f.min;
+    }
+    f.el.value=newVal; calc();
   };
 
   window.mcw2SetPricingPreset = function(type){
@@ -1261,7 +1318,61 @@ section{padding:var(--sec-pad) 0}
 
   Object.keys(fields).forEach(k=>{
     if(!fields[k].el) return;
-    fields[k].el.addEventListener('input', ()=>{ mcw2SetField(k); calc(); });
+    fields[k].el.addEventListener('input', ()=>{
+      mcw2SetField(k);
+      activeBuffer = fields[k].el.value.toString();
+      isFreshInput = true;
+      calc();
+    });
+  });
+
+  /* ---- helper: εκτίμηση μηνυμάτων από επισκέψεις site (hover, tap σε mobile) ---- */
+  const msgHelper = $('mcw2-msg-helper');
+  const msgHelperToggle = $('mcw2-msg-helper-toggle');
+  const msgHelperPanel = $('mcw2-msg-helper-panel');
+  const msgVisitsSlider = $('mcw2-msg-visits-slider');
+  const msgPctSlider = $('mcw2-msg-pct-slider');
+  const msgVisitsVal = $('mcw2-msg-visits-val');
+  const msgPctVal = $('mcw2-msg-pct-val');
+  const msgEstimateVal = $('mcw2-msg-estimate-val');
+  const msgHelperApply = $('mcw2-msg-helper-apply');
+
+  function updateMsgEstimate(){
+    const visitsPerMonth = parseFloat(msgVisitsSlider.value)||0;
+    const percent = parseFloat(msgPctSlider.value)||0;
+    const estimatedWeekly = Math.round(visitsPerMonth*(percent/100)/4.33);
+    msgVisitsVal.innerText = visitsPerMonth;
+    msgPctVal.innerText = percent+'%';
+    msgEstimateVal.innerText = estimatedWeekly;
+    return estimatedWeekly;
+  }
+
+  const canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  if(canHover){
+    msgHelper.addEventListener('mouseenter', ()=>{
+      msgHelperPanel.classList.add('mcw2-open');
+      msgHelperToggle.setAttribute('aria-expanded','true');
+    });
+    msgHelper.addEventListener('mouseleave', ()=>{
+      msgHelperPanel.classList.remove('mcw2-open');
+      msgHelperToggle.setAttribute('aria-expanded','false');
+    });
+  } else {
+    msgHelperToggle.addEventListener('click', ()=>{
+      const open = msgHelperPanel.classList.toggle('mcw2-open');
+      msgHelperToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  msgVisitsSlider.addEventListener('input', updateMsgEstimate);
+  msgPctSlider.addEventListener('input', updateMsgEstimate);
+  updateMsgEstimate();
+
+  msgHelperApply.addEventListener('click', ()=>{
+    const estimatedWeekly = updateMsgEstimate();
+    $('mcw2-slider-weeklyMessages').value = estimatedWeekly;
+    mcw2SetField('weeklyMessages');
+    calc();
   });
 
   mcw2SwitchTab('current');
