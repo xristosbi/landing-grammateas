@@ -162,6 +162,9 @@ section{padding:var(--sec-pad) 0}
   font-weight:600;
   color:var(--ink);
 }
+.nav .logo-img{width:40px;height:40px}
+.nav .brand-name{font-size:21px}
+.nav .btn--small{padding:17px 30px;font-size:17px}
 
 /* ============================================================
    HERO
@@ -885,12 +888,12 @@ section{padding:var(--sec-pad) 0}
 
             <div class="mcw2-input" id="mcw2-group-responseMinutes" onclick="mcw2SetField('responseMinutes')">
               <div class="mcw2-label"><span>Χρόνος απόκρισης</span><span class="mcw2-val" id="mcw2-val-responseMinutes">2 ώρες</span></div>
-              <input type="range" min="0" max="1440" value="120" step="5" id="mcw2-slider-responseMinutes">
+              <input type="range" min="0" max="7" value="2" step="1" id="mcw2-slider-responseMinutes">
             </div>
 
             <div class="mcw2-input" id="mcw2-group-aov" onclick="mcw2SetField('aov')" style="display:none;">
               <div class="mcw2-label"><span>Μέση αξία πελάτη/ραντεβού (AOV)</span><span class="mcw2-val" id="mcw2-val-aov">€120</span></div>
-              <input type="range" min="50" max="500" value="120" step="10" id="mcw2-slider-aov">
+              <input type="range" min="30" max="500" value="120" step="10" id="mcw2-slider-aov">
             </div>
 
             <div class="mcw2-input" id="mcw2-group-lost" onclick="mcw2SetField('lost')" style="display:none;">
@@ -916,10 +919,6 @@ section{padding:var(--sec-pad) 0}
 
           <div class="mcw2-col">
             <div class="mcw2-col-title">2. Κόστος συστήματος</div>
-            <div class="mcw2-presets-bar" id="mcw2-pricing-presets" style="display:none;">
-              <button class="mcw2-mini-btn" onclick="mcw2SetPricingPreset('promo')">Προσφορά testimonial (€450)</button>
-              <button class="mcw2-mini-btn" onclick="mcw2SetPricingPreset('standard')">Κανονική τιμή (€1000)</button>
-            </div>
             <div class="mcw2-input" id="mcw2-group-adspend" onclick="mcw2SetField('adspend')">
               <div class="mcw2-label"><span>Μηνιαία συνδρομή συστήματος</span><span class="mcw2-val" id="mcw2-val-adspend">€0</span></div>
               <input type="range" min="0" max="2000" value="0" step="10" id="mcw2-slider-adspend">
@@ -938,7 +937,7 @@ section{padding:var(--sec-pad) 0}
             <div class="mcw2-col-title">3. Κόστος χρόνου (χειροκίνητα)</div>
             <div class="mcw2-input" id="mcw2-group-hourly" onclick="mcw2SetField('hourly')">
               <div class="mcw2-label"><span>Ωρομίσθιο γραμματέα/σου</span><span class="mcw2-val" id="mcw2-val-hourly">€15</span></div>
-              <input type="range" min="10" max="100" value="15" step="1" id="mcw2-slider-hourly">
+              <input type="range" min="4" max="60" value="15" step="1" id="mcw2-slider-hourly">
             </div>
             <div class="mcw2-input" id="mcw2-group-hours" onclick="mcw2SetField('hours')">
               <div class="mcw2-label"><span>Ώρες/μήνα σε χειροκίνητη απάντηση</span><span class="mcw2-val" id="mcw2-val-hours">40 ώρες</span></div>
@@ -1001,19 +1000,19 @@ section{padding:var(--sec-pad) 0}
   .mcw2{font-family:'Inter',sans-serif;}
   .mcw2-presets{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
   .mcw2-preset-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;color:var(--ink-faint);letter-spacing:.05em;}
-  .mcw2-tab{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink);font-size:12.5px;font-weight:600;padding:9px 18px;border-radius:20px;cursor:pointer;}
+  .mcw2-tab{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink);font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:20px;cursor:pointer;}
   .mcw2-tab:hover{border-color:var(--gold);color:var(--gold-bright);}
   .mcw2-tab.active{background:var(--gold-bright);color:#1A1509;border-color:var(--gold-bright);}
   .mcw2-card{background:var(--bg-raised);border:1.5px solid var(--gold);border-radius:16px;padding:24px;}
   .mcw2-sections{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
   @media(max-width:900px){.mcw2-sections{grid-template-columns:1fr;}}
   .mcw2-col{background:rgba(255,255,255,0.015);border:1px solid var(--hairline);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;}
-  .mcw2-col-title{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--hairline);padding-bottom:6px;margin-bottom:2px;}
+  .mcw2-col-title{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--hairline);padding-bottom:6px;margin-bottom:2px;}
   .mcw2-input{padding:9px 10px;background:rgba(0,0,0,0.2);border:1px solid var(--hairline);border-radius:8px;cursor:pointer;}
   .mcw2-input:hover{border-color:rgba(201,162,75,0.35);}
   .mcw2-input.active{background:rgba(201,162,75,0.06);border-color:var(--gold);}
-  .mcw2-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:500;font-size:12.5px;color:var(--ink-dim);}
-  .mcw2-val{font-family:'JetBrains Mono',monospace;color:var(--ink-dim);font-size:12px;font-weight:600;background:var(--bg);padding:2px 7px;border-radius:4px;border:1px solid var(--hairline);white-space:nowrap;}
+  .mcw2-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:500;font-size:15px;color:var(--ink-dim);}
+  .mcw2-val{font-family:'JetBrains Mono',monospace;color:var(--ink-dim);font-size:14.5px;font-weight:600;background:var(--bg);padding:2px 7px;border-radius:4px;border:1px solid var(--hairline);white-space:nowrap;}
   .mcw2-input.active .mcw2-val{color:var(--gold-bright);background:rgba(201,162,75,0.14);border-color:var(--gold);}
   .mcw2 input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--hairline);outline:none;margin:5px 0 2px;}
   .mcw2 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold-bright);cursor:pointer;}
@@ -1027,7 +1026,6 @@ section{padding:var(--sec-pad) 0}
   .mcw2-ltv{margin-top:auto;background:rgba(201,162,75,0.05);border:1px dashed var(--gold);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;}
   .mcw2-ltv-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;}
   .mcw2-ltv-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--gold-bright);}
-  .mcw2-presets-bar{display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;}
   .mcw2-mini-btn{background:var(--bg-raised-2);border:1px solid var(--gold);color:var(--gold-bright);font-size:10.5px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer;}
   .mcw2-mini-btn:hover{background:var(--gold-bright);color:#1A1509;}
   .mcw2-bottom{display:grid;grid-template-columns:220px 1fr;gap:16px;border-top:1px dashed var(--hairline);padding-top:18px;}
@@ -1035,15 +1033,15 @@ section{padding:var(--sec-pad) 0}
   .mcw2-keypad{background:var(--bg);border:1px solid var(--hairline);border-radius:12px;padding:12px;display:flex;flex-direction:column;justify-content:center;}
   .mcw2-keypad-head{text-align:center;margin-bottom:8px;}
   .mcw2-keypad-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.05em;color:var(--ink-faint);text-transform:uppercase;}
-  .mcw2-keypad-target{font-size:12px;font-weight:600;color:var(--gold-bright);margin-top:2px;}
+  .mcw2-keypad-target{font-size:14px;font-weight:600;color:var(--gold-bright);margin-top:2px;}
   .mcw2-keypad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
-  .mcw2-key{background:var(--bg-raised-2);border:1px solid var(--hairline);border-radius:6px;color:var(--ink);font-size:14px;font-weight:600;padding:9px;cursor:pointer;}
+  .mcw2-key{background:var(--bg-raised-2);border:1px solid var(--hairline);border-radius:6px;color:var(--ink);font-size:16px;font-weight:600;padding:11px;cursor:pointer;}
   .mcw2-key:hover{background:var(--hairline);color:var(--gold-bright);border-color:var(--gold);}
   .mcw2-key-clear{color:var(--ink-faint);}
   .mcw2-key-back{color:var(--wine-bright);}
   .mcw2-scenarios{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap;}
   .mcw2-scenario-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;}
-  .mcw2-scenario{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink);font-size:11.5px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;}
+  .mcw2-scenario{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink);font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;}
   .mcw2-scenario:hover{border-color:var(--gold);color:var(--gold-bright);}
   .mcw2-scenario.active{background:var(--gold-bright);color:#1A1509;border-color:var(--gold-bright);font-weight:700;}
   .mcw2-dash-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
@@ -1054,14 +1052,14 @@ section{padding:var(--sec-pad) 0}
   .mcw2-metrics.hover-reveal{opacity:.15;filter:blur(4px);cursor:pointer;transition:all .3s ease;}
   .mcw2-metrics.hover-reveal:hover,.mcw2-metrics.revealed{opacity:1;filter:blur(0);}
   .mcw2-metric{background:rgba(255,255,255,0.02);border:1px solid var(--hairline);border-radius:10px;padding:11px 6px;text-align:center;}
-  .mcw2-metric-label{font-size:10px;font-weight:700;color:var(--ink-dim);margin-bottom:4px;}
-  .mcw2-metric-val{font-family:'Fraunces',serif;font-size:18px;font-weight:600;line-height:1.1;color:var(--ink);}
-  .mcw2-metric-sub{font-size:9.5px;color:var(--ink-faint);margin-top:4px;}
+  .mcw2-metric-label{font-size:12px;font-weight:700;color:var(--ink-dim);margin-bottom:4px;}
+  .mcw2-metric-val{font-family:'Fraunces',serif;font-size:22px;font-weight:600;line-height:1.1;color:var(--ink);}
+  .mcw2-metric-sub{font-size:11px;color:var(--ink-faint);margin-top:4px;}
   .mcw2-summary{background:rgba(0,0,0,0.25);border:1px solid var(--hairline);border-radius:8px;padding:7px 15px;}
   .mcw2-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--hairline);}
   .mcw2-row:last-child{border-bottom:none;}
-  .mcw2-row-label{font-size:12px;color:var(--ink-dim);}
-  .mcw2-row-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--ink);}
+  .mcw2-row-label{font-size:14px;color:var(--ink-dim);}
+  .mcw2-row-val{font-family:'JetBrains Mono',monospace;font-size:15.5px;font-weight:700;color:var(--ink);}
   .mcw2-row-val.loss{color:var(--wine-bright);}
   .mcw2-row-val.gain{color:var(--sage-bright);}
   .mcw2-row-val.highlight{color:var(--gold-bright);}
@@ -1069,8 +1067,8 @@ section{padding:var(--sec-pad) 0}
   @media(max-width:820px){.mcw2-comparison{grid-template-columns:1fr;}}
   .mcw2-comp-box{background:rgba(255,255,255,0.02);border:1px solid var(--hairline);border-radius:12px;padding:18px;text-align:center;}
   .mcw2-comp-box.mcw2-highlight{border-color:var(--gold);background:rgba(201,162,75,0.05);}
-  .mcw2-comp-title{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;margin-bottom:8px;}
-  .mcw2-comp-val{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:4px;}
+  .mcw2-comp-title{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;margin-bottom:8px;}
+  .mcw2-comp-val{font-family:'Fraunces',serif;font-size:28px;font-weight:600;margin-bottom:4px;}
   .mcw2-comp-sub{font-size:11px;color:var(--ink-dim);}
 </style>
 
@@ -1082,37 +1080,47 @@ section{padding:var(--sec-pad) 0}
   let activeBuffer = '';
   let isFreshInput = true;
 
+  const responseTimeSteps = [
+    { minutes: 5,    label: '<5 λεπτά' },
+    { minutes: 60,   label: '1 ώρα' },
+    { minutes: 120,  label: '2 ώρες' },
+    { minutes: 180,  label: '3 ώρες' },
+    { minutes: 240,  label: '4 ώρες' },
+    { minutes: 300,  label: '5 ώρες' },
+    { minutes: 600,  label: '10 ώρες' },
+    { minutes: 1440, label: '1 μέρα' }
+  ];
+
   const state = {
-    current: { weeklyMessages:40, responseMinutes:120, adspend:0, agency:0, hourly:15, hours:40 },
+    current: { weeklyMessages:40, responseMinutes:2, adspend:0, agency:0, hourly:15, hours:40 },
     opt: {
       guess:      { aov:120, lost:15, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
-      fika:       { aov:120, lost:78, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
+      fika:       { aov:100, lost:78, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
       breakeven:  { aov:120, lost:5,  frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 }
     }
   };
 
   const fields = {
     weeklyMessages:{el:$('mcw2-slider-weeklyMessages'),min:10,max:200,label:'Μηνύματα/εβδομάδα'},
-    responseMinutes:{el:$('mcw2-slider-responseMinutes'),min:0,max:1440,label:'Χρόνος απόκρισης'},
-    aov:{el:$('mcw2-slider-aov'),min:50,max:500,label:'AOV'},
+    responseMinutes:{el:$('mcw2-slider-responseMinutes'),min:0,max:7,label:'Χρόνος απόκρισης'},
+    aov:{el:$('mcw2-slider-aov'),min:30,max:500,label:'AOV'},
     lost:{el:$('mcw2-slider-lost'),min:0,max:200,label:'Ανακτημένα ραντεβού'},
     frequency:{el:$('mcw2-slider-frequency'),min:1,max:12,label:'Συχνότητα επαναγοράς'},
     adspend:{el:$('mcw2-slider-adspend'),min:0,max:2000,label:'Μηνιαία συνδρομή'},
     agency:{el:$('mcw2-slider-agency'),min:0,max:2000,label:'Λοιπά κόστη'},
     setup:{el:$('mcw2-slider-setup'),min:0,max:2000,label:'Setup fee'},
-    hourly:{el:$('mcw2-slider-hourly'),min:10,max:100,label:'Ωρομίσθιο'},
+    hourly:{el:$('mcw2-slider-hourly'),min:4,max:60,label:'Ωρομίσθιο'},
     hours:{el:$('mcw2-slider-hours'),min:0,max:160,label:'Ώρες χειροκίνητα'},
     margin:{el:$('mcw2-slider-margin'),min:0,max:100,label:'Ποσοστό κέρδους'}
   };
 
   function fmtEUR(n){ const neg=n<0; n=Math.abs(Math.round(n)); const s='€'+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'); return neg?'-'+s:s; }
-  function fmtMinutes(m){ if(m<5) return '<5 λεπτά'; if(m<180) return Math.round(m/60*10)/10+' ώρες'; return Math.round(m/1440*10)/10+' μέρες'; }
   function lossFactorFor(min){ if(min<5) return 0; if(min<=180) return 0.40; return 0.65; }
 
   function currentMetrics(){
     const d = state.current;
     const aov = state.opt.guess.aov || 120;
-    const lossFactor = lossFactorFor(d.responseMinutes);
+    const lossFactor = lossFactorFor(responseTimeSteps[d.responseMinutes].minutes);
     const baseConversion = 0.25;
     const lostAppts = Math.round(d.weeklyMessages*4.33*baseConversion*lossFactor);
     const lostRevenue = lostAppts*aov;
@@ -1184,13 +1192,6 @@ section{padding:var(--sec-pad) 0}
     f.el.value=newVal; calc();
   };
 
-  window.mcw2SetPricingPreset = function(type){
-    if(activeTab!=='optimal') mcw2SwitchTab('optimal');
-    if(type==='promo'){ $('mcw2-slider-adspend').value=450; } else { $('mcw2-slider-adspend').value=1000; }
-    $('mcw2-slider-agency').value=0; $('mcw2-slider-setup').value=0;
-    calc();
-  };
-
   window.mcw2ToggleReveal = function(){
     isRevealed=!isRevealed;
     const g=$('mcw2-metric-grid');
@@ -1220,7 +1221,7 @@ section{padding:var(--sec-pad) 0}
     if(tab==='compare'){
       slidersC.style.display='none'; compView.style.display='grid';
       $('mcw2-results-title').innerText='Σύγκριση';
-      $('mcw2-scenarios-bar').style.display='none'; $('mcw2-pricing-presets').style.display='none';
+      $('mcw2-scenarios-bar').style.display='none';
       updateComparison(); return;
     }
     slidersC.style.display='grid'; compView.style.display='none';
@@ -1230,7 +1231,7 @@ section{padding:var(--sec-pad) 0}
       $('mcw2-col1-title').innerText='1. Μηνύματα & απόκριση';
       show('mcw2-group-weeklyMessages','block'); show('mcw2-group-responseMinutes','block');
       show('mcw2-group-aov','none'); show('mcw2-group-lost','none'); show('mcw2-group-frequency','none'); show('mcw2-group-setup','none'); show('mcw2-group-margin','none');
-      show('mcw2-pricing-presets','none'); show('mcw2-scenarios-bar','none'); show('mcw2-ltv-box','none');
+      show('mcw2-scenarios-bar','none'); show('mcw2-ltv-box','none');
       $('mcw2-results-title').innerText='Σύνοψη (σημερινή κατάσταση)';
       $('mcw2-slider-weeklyMessages').value=state.current.weeklyMessages;
       $('mcw2-slider-responseMinutes').value=state.current.responseMinutes;
@@ -1241,7 +1242,7 @@ section{padding:var(--sec-pad) 0}
       $('mcw2-col1-title').innerText='1. Στόχοι με το σύστημα';
       show('mcw2-group-weeklyMessages','none'); show('mcw2-group-responseMinutes','none');
       show('mcw2-group-aov','block'); show('mcw2-group-lost','block'); show('mcw2-group-frequency','block'); show('mcw2-group-setup','block'); show('mcw2-group-margin','block');
-      show('mcw2-pricing-presets','flex'); show('mcw2-scenarios-bar','flex'); show('mcw2-ltv-box','flex');
+      show('mcw2-scenarios-bar','flex'); show('mcw2-ltv-box','flex');
       $('mcw2-results-title').innerText='Σύνοψη (ιδανική κατάσταση)';
       const d=state.opt[activeScenario];
       $('mcw2-slider-aov').value=d.aov; $('mcw2-slider-lost').value=d.lost; $('mcw2-slider-frequency').value=d.frequency;
@@ -1268,7 +1269,7 @@ section{padding:var(--sec-pad) 0}
     saveState();
     if(activeTab==='current'){
       $('mcw2-val-weeklyMessages').innerText=state.current.weeklyMessages;
-      $('mcw2-val-responseMinutes').innerText=fmtMinutes(state.current.responseMinutes);
+      $('mcw2-val-responseMinutes').innerText=responseTimeSteps[state.current.responseMinutes].label;
       $('mcw2-val-adspend').innerText=fmtEUR(state.current.adspend);
       $('mcw2-val-agency').innerText=fmtEUR(state.current.agency);
       $('mcw2-val-hourly').innerText=fmtEUR(state.current.hourly)+'/ώρα';
