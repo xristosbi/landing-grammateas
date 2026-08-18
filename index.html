@@ -985,7 +985,9 @@ section{padding:var(--sec-pad) 0}
               <div class="mcw2-row"><span class="mcw2-row-label" id="mcw2-lbl-profit">Ετήσια απώλεια:</span><span class="mcw2-row-val loss" id="mcw2-res-profit">€0</span></div>
               <div class="mcw2-row" id="mcw2-row-breakeven" style="display:none;"><span class="mcw2-row-label" id="mcw2-lbl-breakeven">Ραντεβού για break-even:</span><span class="mcw2-row-val highlight" id="mcw2-res-breakeven">0</span></div>
               <div class="mcw2-row" id="mcw2-row-ltv" style="display:none;"><span class="mcw2-row-label">Συνολική αξία LTV νέων πελατών:</span><span class="mcw2-row-val highlight" id="mcw2-res-ltv">€0</span></div>
+              <div class="mcw2-row" id="mcw2-row-setup" style="display:none;"><span class="mcw2-row-label">Εφάπαξ κόστος εγκατάστασης (μία φορά):</span><span class="mcw2-row-val loss" id="mcw2-res-setup">€0</span></div>
             </div>
+            <p class="mcw2-breakdown" id="mcw2-breakdown"></p>
           </div>
         </div>
       </div>
@@ -1056,6 +1058,7 @@ section{padding:var(--sec-pad) 0}
   .mcw2-metric-val{font-family:'Fraunces',serif;font-size:22px;font-weight:600;line-height:1.1;color:var(--ink);}
   .mcw2-metric-sub{font-size:11px;color:var(--ink-faint);margin-top:4px;}
   .mcw2-summary{background:rgba(0,0,0,0.25);border:1px solid var(--hairline);border-radius:8px;padding:7px 15px;}
+  .mcw2-breakdown{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);line-height:1.5;margin-top:12px;padding-top:10px;border-top:1px solid var(--hairline);}
   .mcw2-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--hairline);}
   .mcw2-row:last-child{border-bottom:none;}
   .mcw2-row-label{font-size:14px;color:var(--ink-dim);}
@@ -1136,13 +1139,20 @@ section{padding:var(--sec-pad) 0}
     const monthlyRevenue = d.aov*d.lost;
     const ltvTotal = d.aov*d.lost*d.frequency;
     const timeCost = d.hourly*d.hours;
+    /* recurringMonthly = μόνο τα πραγματικά μηνιαία κόστη λειτουργίας του
+       συστήματος (συνδρομή + λοιπά marketing). Το timeCost εμφανίζεται ήδη
+       ξεχωριστά ως δικό του metric ("Κόστος χρόνου") και ΔΕΝ είναι κόστος
+       του συστήματος· το setup είναι εφάπαξ, όχι μηνιαίο. */
+    const recurringMonthly = d.adspend + d.agency;
+    /* totalInvestment (με setup + timeCost) χρησιμοποιείται ΜΟΝΟ για το
+       break-even — πότε αποσβένεται η συνολική αρχική επένδυση. */
     const totalInvestment = d.adspend+d.agency+d.setup+timeCost;
-    const ltvNetProfit = (ltvTotal*marginRate)-totalInvestment;
-    const roiMonthly = totalInvestment>0 ? monthlyRevenue/totalInvestment : 0;
-    const roiLtv = totalInvestment>0 ? ltvTotal/totalInvestment : 0;
+    const ltvNetProfit = (ltvTotal*marginRate)-recurringMonthly;
+    const roiMonthly = recurringMonthly>0 ? monthlyRevenue/recurringMonthly : 0;
+    const roiLtv = recurringMonthly>0 ? ltvTotal/recurringMonthly : 0;
     const netProfitPerClientLtv = d.aov*d.frequency*marginRate;
     const breakEven = netProfitPerClientLtv>0 ? Math.ceil(totalInvestment/netProfitPerClientLtv) : 0;
-    return { monthlyRevenue, ltvTotal, timeCost, totalInvestment, ltvNetProfit, roiMonthly, roiLtv, breakEven };
+    return { monthlyRevenue, ltvTotal, timeCost, recurringMonthly, totalInvestment, ltvNetProfit, roiMonthly, roiLtv, breakEven };
   }
 
   window.mcw2SetField = function(k){
@@ -1283,7 +1293,12 @@ section{padding:var(--sec-pad) 0}
 
       $('mcw2-lbl-invest').innerText='Συνολικό μηνιαίο κόστος:'; $('mcw2-res-invest').innerText=fmtEUR(m.totalMonthly); $('mcw2-res-invest').className='mcw2-row-val loss';
       $('mcw2-lbl-profit').innerText='Ετήσια απώλεια:'; $('mcw2-res-profit').innerText=fmtEUR(m.totalMonthly*12); $('mcw2-res-profit').className='mcw2-row-val loss';
-      $('mcw2-row-breakeven').style.display='none'; $('mcw2-row-ltv').style.display='none';
+      $('mcw2-row-breakeven').style.display='none'; $('mcw2-row-ltv').style.display='none'; $('mcw2-row-setup').style.display='none';
+
+      const monthlyMsgs = Math.round(state.current.weeklyMessages*4.33);
+      const lossPct = Math.round(m.lossFactor*100);
+      const rtLabel = responseTimeSteps[state.current.responseMinutes].label;
+      $('mcw2-breakdown').innerText = `${monthlyMsgs} μηνύματα/μήνα × ${lossPct}% απώλεια (απόκριση σε ${rtLabel}) × 25% μετατροπή μηνύματος σε ραντεβού = ${m.lostAppts} χαμένα ραντεβού/μήνα. × ${fmtEUR(m.aov)} μέση αξία = ${fmtEUR(m.lostRevenue)} χαμένα έσοδα/μήνα.`;
     } else if(activeTab==='optimal'){
       const d=state.opt[activeScenario];
       $('mcw2-val-aov').innerText=fmtEUR(d.aov); $('mcw2-val-lost').innerText=d.lost; $('mcw2-val-frequency').innerText=d.frequency+' φορές';
@@ -1297,24 +1312,36 @@ section{padding:var(--sec-pad) 0}
       $('mcw2-lbl-3').innerText='Κόστος χρόνου'; $('mcw2-res-3').innerText=fmtEUR(m.timeCost); $('mcw2-sub-3').innerText='Χειροκίνητα, πλέον σχεδόν 0';
       $('mcw2-lbl-4').innerText='ROI συνολικό (LTV)'; $('mcw2-res-4').innerText=m.roiLtv.toFixed(1)+'x'; $('mcw2-sub-4').innerText='Με επαναγορές';
 
-      $('mcw2-lbl-invest').innerText='Συνολικό μηνιαίο κόστος συστήματος:'; $('mcw2-res-invest').innerText=fmtEUR(m.totalInvestment); $('mcw2-res-invest').className='mcw2-row-val loss';
+      $('mcw2-lbl-invest').innerText='Συνολικό μηνιαίο κόστος συστήματος:'; $('mcw2-res-invest').innerText=fmtEUR(m.recurringMonthly); $('mcw2-res-invest').className='mcw2-row-val loss';
       $('mcw2-lbl-profit').innerText='Καθαρό κέρδος (με επαναγορές):'; $('mcw2-res-profit').innerText=fmtEUR(m.ltvNetProfit); $('mcw2-res-profit').className='mcw2-row-val '+(m.ltvNetProfit>=0?'gain':'loss');
 
       $('mcw2-row-breakeven').style.display='flex'; $('mcw2-lbl-breakeven').innerText='Ραντεβού για break-even:'; $('mcw2-res-breakeven').innerText=m.breakEven+' ραντεβού';
       $('mcw2-row-ltv').style.display='flex'; $('mcw2-res-ltv').innerText=fmtEUR(m.ltvTotal);
+      if(d.setup>0){
+        $('mcw2-row-setup').style.display='flex'; $('mcw2-res-setup').innerText=fmtEUR(d.setup);
+      } else {
+        $('mcw2-row-setup').style.display='none';
+      }
+
+      let breakdown = `${d.lost} ανακτημένα ραντεβού × ${fmtEUR(d.aov)} = ${fmtEUR(m.monthlyRevenue)} επιπλέον έσοδα/μήνα. Με ${d.frequency} επαναγορές/έτος, συνολική αξία πελατών: ${fmtEUR(m.ltvTotal)}. Μείον ${fmtEUR(m.recurringMonthly)} μηνιαίο κόστος συστήματος = ${fmtEUR(m.ltvNetProfit)} καθαρό/μήνα`;
+      breakdown += d.setup>0 ? ` (μετά την αρχική εγκατάσταση των ${fmtEUR(d.setup)}).` : '.';
+      $('mcw2-breakdown').innerText = breakdown;
     }
   }
 
   function updateComparison(){
     const cm=currentMetrics();
     const om=optimalMetrics(activeScenario);
+    const optState=state.opt[activeScenario];
     const currAnnual=cm.totalMonthly*12;
-    const optAnnual=om.ltvNetProfit*12;
+    const optAnnual=(om.ltvNetProfit*12)-optState.setup;
     const gapAnnual=currAnnual+optAnnual;
 
     $('mcw2-comp-curr-annual').innerText=fmtEUR(currAnnual); $('mcw2-comp-curr-monthly').innerText=fmtEUR(cm.totalMonthly)+'/μήνα';
     $('mcw2-comp-opt-annual').innerText=fmtEUR(optAnnual); $('mcw2-comp-opt-monthly').innerText=fmtEUR(om.ltvNetProfit)+'/μήνα';
     $('mcw2-comp-gap-annual').innerText=fmtEUR(gapAnnual)+'/έτος'; $('mcw2-comp-gap-monthly').innerText=fmtEUR(cm.totalMonthly+om.ltvNetProfit)+'/μήνα';
+
+    $('mcw2-breakdown').innerText = `Σήμερα χάνεις ${fmtEUR(currAnnual)}/έτος. Με το σύστημα, κερδίζεις ${fmtEUR(optAnnual)}/έτος καθαρά (μετά την αρχική εγκατάσταση). Συνολική διαφορά: ${fmtEUR(gapAnnual)}/έτος.`;
   }
 
   Object.keys(fields).forEach(k=>{
