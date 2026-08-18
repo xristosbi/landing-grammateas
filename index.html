@@ -374,261 +374,6 @@ section{padding:var(--sec-pad) 0}
 }
 
 /* ============================================================
-   CALCULATOR
-   ============================================================ */
-.calc-card{
-  background:var(--bg-raised);
-  border:1px solid var(--hairline);
-  border-radius:var(--radius);
-  padding:clamp(28px,4vw,52px);
-  margin-top:44px;
-}
-.calc-label{
-  display:block;
-  font-size:16px;
-  font-weight:600;
-  margin-bottom:22px;
-}
-.response-toggles{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:34px;
-}
-.response-toggle{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-  user-select:none;
-  font-family:var(--font-mono);
-  font-size:12.5px;
-  font-weight:600;
-  letter-spacing:0.04em;
-  color:var(--ink-dim);
-  background:var(--bg-raised-2);
-  border:1px solid var(--hairline);
-  border-radius:999px;
-  padding:9px 18px;
-  transition:color .18s ease, border-color .18s ease, background .18s ease;
-}
-.response-toggle input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
-}
-.response-toggle:has(input:checked){
-  color:var(--gold-bright);
-  border-color:rgba(201,162,75,0.55);
-  background:rgba(201,162,75,0.10);
-}
-.response-toggle:has(input:focus-visible){
-  outline:2px solid var(--gold-bright);
-  outline-offset:3px;
-}
-
-/* ---- message-volume helper ---- */
-.msg-helper{margin-bottom:30px}
-.msg-helper-toggle{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:none;
-  border:none;
-  padding:0;
-  cursor:pointer;
-  font-family:var(--font-mono);
-  font-size:12.5px;
-  font-weight:600;
-  color:var(--gold-bright);
-  text-align:left;
-}
-.msg-helper-toggle .chevron{
-  display:inline-block;
-  transition:transform .2s ease;
-}
-.msg-helper-toggle[aria-expanded="true"] .chevron{
-  transform:rotate(90deg);
-}
-.msg-helper-panel{
-  margin-top:18px;
-  background:var(--bg-raised-2);
-  border:1px solid var(--hairline);
-  border-radius:var(--radius);
-  padding:26px 26px 28px;
-}
-.msg-helper-panel .calc-label{
-  font-size:14px;
-  margin-bottom:16px;
-}
-.msg-helper-panel .slider-row{
-  margin-bottom:26px;
-}
-.msg-helper-estimate{
-  font-family:var(--font-mono);
-  font-size:13.5px;
-  color:var(--ink-dim);
-  margin-bottom:18px;
-}
-.msg-helper-estimate strong{
-  color:var(--gold-bright);
-  font-size:16px;
-}
-
-/* ---- tabs ---- */
-.calc-tabs{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  border-bottom:1px solid var(--hairline);
-  padding-bottom:28px;
-  margin-bottom:32px;
-}
-.calc-tab{
-  font-family:var(--font-mono);
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:0.08em;
-  color:var(--ink-dim);
-  background:var(--bg-raised-2);
-  border:1px solid var(--hairline);
-  border-radius:999px;
-  padding:11px 20px;
-  cursor:pointer;
-  transition:color .18s ease, border-color .18s ease, background .18s ease;
-}
-.calc-tab.is-active{
-  color:var(--gold-bright);
-  border-color:rgba(201,162,75,0.55);
-  background:rgba(201,162,75,0.10);
-}
-.calc-panel{display:none}
-.calc-panel.is-active{display:block}
-
-.calc-result.calc-result--pain{border-top:3px solid var(--wine-bright)}
-.calc-result.calc-result--pain .num{color:var(--wine-bright)}
-.calc-result.calc-result--dream{border-top:3px solid var(--sage-bright)}
-.calc-result.calc-result--dream .num{color:var(--sage-bright)}
-
-.calc-stats-row{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-bottom:24px;
-}
-.calc-stat{
-  font-family:var(--font-mono);
-  font-size:12.5px;
-  color:var(--sage-bright);
-  background:rgba(76,140,116,0.10);
-  border:1px solid rgba(107,175,147,0.28);
-  border-radius:var(--radius);
-  padding:14px 16px;
-  line-height:1.5;
-}
-
-.gap-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-.gap-col{
-  border-radius:var(--radius);
-  border:1px solid var(--hairline);
-  background:var(--bg-raised-2);
-  padding:26px 24px;
-}
-.gap-col h4{
-  font-family:var(--font-serif);
-  font-size:18px;
-  font-weight:600;
-  margin-bottom:16px;
-}
-.gap-col p{
-  font-size:14.5px;
-  color:var(--ink-dim);
-  padding:10px 0;
-  border-top:1px solid var(--hairline);
-}
-.gap-col p:first-of-type{border-top:none;padding-top:0}
-.gap-col--bad{border-top:3px solid var(--wine-bright)}
-.gap-col--bad h4{color:var(--wine-bright)}
-.gap-col--good{border-top:3px solid var(--sage-bright)}
-.gap-col--good h4{color:var(--sage-bright)}
-
-.slider-row{
-  display:flex;
-  align-items:center;
-  gap:24px;
-  margin-bottom:40px;
-}
-input[type="range"]{
-  -webkit-appearance:none;
-  appearance:none;
-  flex:1;
-  height:6px;
-  border-radius:999px;
-  background:linear-gradient(to right,var(--gold) 0%,var(--gold) var(--fill,10%),var(--bg-raised-2) var(--fill,10%),var(--bg-raised-2) 100%);
-  outline-offset:6px;
-}
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  appearance:none;
-  width:26px;height:26px;
-  border-radius:50%;
-  background:var(--gold-bright);
-  border:3px solid var(--bg);
-  box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(0,0,0,0.5);
-  cursor:grab;
-}
-input[type="range"]::-moz-range-thumb{
-  width:26px;height:26px;
-  border-radius:50%;
-  background:var(--gold-bright);
-  border:3px solid var(--bg);
-  box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(0,0,0,0.5);
-  cursor:grab;
-}
-.slider-value{
-  font-family:var(--font-mono);
-  font-size:22px;
-  font-weight:600;
-  color:var(--gold-bright);
-  min-width:74px;
-  text-align:right;
-}
-.calc-results{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-.calc-result{
-  background:var(--bg-raised-2);
-  border:1px solid var(--hairline);
-  border-radius:var(--radius);
-  padding:28px 26px;
-}
-.calc-result .num{
-  font-family:var(--font-serif);
-  font-size:clamp(34px,4vw,48px);
-  font-weight:600;
-  color:var(--gold-bright);
-  line-height:1.05;
-}
-.calc-result .lbl{
-  font-size:14px;
-  color:var(--ink-dim);
-  margin-top:8px;
-}
-.calc-fine{
-  font-family:var(--font-mono);
-  font-size:11.5px;
-  color:var(--ink-faint);
-  margin-top:26px;
-  line-height:1.6;
-}
-
-/* ============================================================
    PAIN GRID
    ============================================================ */
 .pain-grid{
@@ -1082,134 +827,446 @@ input[type="range"]::-moz-range-thumb{
 <!-- ============================================================
      CALCULATOR
      ============================================================ -->
-<section id="calculator">
+<section id="calc">
   <div class="wrap">
-    <span class="eyebrow">Το κόστος της σιωπής</span>
-    <h2 class="section-title">Πόσα ραντεβού χάνεις κάθε μήνα;</h2>
-    <p class="section-sub">Σύρε τον δείκτη και δες τι σου κοστίζουν τα αναπάντητα μηνύματα — σε ραντεβού και σε έσοδα.</p>
+    <div class="eyebrow">Ο υπολογιστής</div>
+    <h2 class="section-title">Πόσα χάνεις σήμερα — και πόσα κερδίζεις με το σύστημα;</h2>
+    <p class="section-sub">Δες την πλήρη εικόνα: τη σημερινή κατάσταση, την ιδανική με το σύστημα, και το gap ανάμεσά τους.</p>
 
-    <div class="calc-card">
-      <div class="calc-tabs" role="tablist" aria-label="Προβολή αποτελεσμάτων">
-        <button type="button" class="calc-tab is-active" id="tab1Btn" role="tab" aria-selected="true" aria-controls="tab1Panel">Η ΣΗΜΕΡΙΝΗ ΚΑΤΑΣΤΑΣΗ</button>
-        <button type="button" class="calc-tab" id="tab2Btn" role="tab" aria-selected="false" aria-controls="tab2Panel" tabindex="-1">Η ΙΔΑΝΙΚΗ ΚΑΤΑΣΤΑΣΗ ΜΕ AI 24/7</button>
-        <button type="button" class="calc-tab" id="tab3Btn" role="tab" aria-selected="false" aria-controls="tab3Panel" tabindex="-1">ΧΩΡΙΣ VS ΜΕ ΣΥΣΤΗΜΑ</button>
+    <div class="mcw2" style="margin-top:32px;">
+      <div class="mcw2-presets">
+        <span class="mcw2-preset-label">Στάδιο ανάλυσης:</span>
+        <button class="mcw2-tab active" id="mcw2-tab-current" onclick="mcw2SwitchTab('current')">Η σημερινή κατάσταση</button>
+        <button class="mcw2-tab" id="mcw2-tab-optimal" onclick="mcw2SwitchTab('optimal')">Η ιδανική κατάσταση</button>
+        <button class="mcw2-tab" id="mcw2-tab-compare" onclick="mcw2SwitchTab('compare')">Το gap</button>
       </div>
 
-      <div class="msg-helper">
-        <button type="button" class="msg-helper-toggle" id="msgHelperToggle" aria-expanded="false" aria-controls="msgHelperPanel">
-          <span class="chevron" aria-hidden="true">▸</span>
-          Δεν ξέρεις πόσα μηνύματα λαμβάνεις; Υπολόγισέ το από τις επισκέψεις σου
-        </button>
-        <div class="msg-helper-panel" id="msgHelperPanel" hidden>
-          <label class="calc-label" for="visitsSlider">Πόσες επισκέψεις έχει το site σου τον μήνα;</label>
-          <div class="slider-row">
-            <input type="range" id="visitsSlider" min="200" max="10000" step="100" value="2000">
-            <output class="slider-value" id="visitsValue" for="visitsSlider">2000</output>
+      <div class="mcw2-card">
+        <div class="mcw2-comparison" id="mcw2-comparison-view">
+          <div class="mcw2-comp-box">
+            <div class="mcw2-comp-title">Σημερινή κατάσταση (ετήσια απώλεια)</div>
+            <div class="mcw2-comp-val" style="color:var(--wine-bright);" id="mcw2-comp-curr-annual">€0</div>
+            <div class="mcw2-comp-sub" id="mcw2-comp-curr-monthly">€0/μήνα</div>
           </div>
-
-          <label class="calc-label" for="pctSlider">Τι ποσοστό επισκεπτών πιστεύεις ότι θα μιλούσε με το chatbot;</label>
-          <div class="slider-row">
-            <input type="range" id="pctSlider" min="5" max="25" step="1" value="12">
-            <output class="slider-value" id="pctValue" for="pctSlider">12%</output>
+          <div class="mcw2-comp-box">
+            <div class="mcw2-comp-title">Ιδανική κατάσταση (ετήσιο καθαρό κέρδος)</div>
+            <div class="mcw2-comp-val" style="color:var(--sage-bright);" id="mcw2-comp-opt-annual">€0</div>
+            <div class="mcw2-comp-sub" id="mcw2-comp-opt-monthly">€0/μήνα</div>
           </div>
-
-          <p class="msg-helper-estimate">Εκτίμηση: ~<strong id="estimateOut">—</strong> μηνύματα/εβδομάδα</p>
-          <button type="button" class="btn btn--small" id="msgHelperApply">Χρησιμοποίησε αυτό</button>
-        </div>
-      </div>
-
-      <label class="calc-label" for="msgSlider">Πόσα μηνύματα/DMs/leads λαμβάνεις την εβδομάδα (site, Instagram, Facebook);</label>
-      <div class="slider-row">
-        <input type="range" id="msgSlider" min="10" max="200" step="5" value="40"
-               aria-describedby="calcFine">
-        <output class="slider-value" id="msgValue" for="msgSlider">40</output>
-      </div>
-
-      <label class="calc-label">Μέσος χρόνος απόκρισης στα μηνύματα σήμερα;</label>
-      <div class="response-toggles" role="radiogroup" aria-label="Μέσος χρόνος απόκρισης στα μηνύματα σήμερα">
-        <label class="response-toggle">
-          <input type="radio" name="responseTime" id="rtFast" value="0">
-          <span>&lt;5 λεπτά</span>
-        </label>
-        <label class="response-toggle">
-          <input type="radio" name="responseTime" id="rtMed" value="0.40" checked>
-          <span>1-3 ώρες</span>
-        </label>
-        <label class="response-toggle">
-          <input type="radio" name="responseTime" id="rtSlow" value="0.65">
-          <span>4+ ώρες / επόμενη μέρα</span>
-        </label>
-      </div>
-
-      <label class="calc-label" for="aovSlider">Μέση αξία πελάτη/ραντεβού (AOV);</label>
-      <div class="slider-row">
-        <input type="range" id="aovSlider" min="50" max="500" step="10" value="120"
-               aria-describedby="calcFine">
-        <output class="slider-value" id="aovValue" for="aovSlider">€120</output>
-      </div>
-
-      <div class="calc-panel is-active" id="tab1Panel" role="tabpanel" aria-labelledby="tab1Btn">
-        <div class="calc-results" aria-live="polite">
-          <div class="calc-result calc-result--pain">
-            <div class="num" id="lostAppts">—</div>
-            <div class="lbl">❌ Χαμένα ραντεβού / μήνα</div>
-          </div>
-          <div class="calc-result calc-result--pain">
-            <div class="num" id="lostRevenueMonth">—</div>
-            <div class="lbl">❌ Χαμένα έσοδα / μήνα</div>
-          </div>
-          <div class="calc-result calc-result--pain">
-            <div class="num" id="lostRevenueYear">—</div>
-            <div class="lbl">❌ Ετήσια απώλεια τζίρου</div>
+          <div class="mcw2-comp-box mcw2-highlight">
+            <div class="mcw2-comp-title" style="color:var(--gold-bright);">Το gap — τι χάνεις αν δεν αλλάξεις</div>
+            <div class="mcw2-comp-val" style="color:var(--gold-bright);" id="mcw2-comp-gap-annual">€0/έτος</div>
+            <div class="mcw2-comp-sub" id="mcw2-comp-gap-monthly">€0/μήνα</div>
           </div>
         </div>
-      </div>
 
-      <div class="calc-panel" id="tab2Panel" role="tabpanel" aria-labelledby="tab2Btn" hidden>
-        <div class="calc-stats-row">
-          <div class="calc-stat">⚡ Χρόνος απόκρισης: 5 δευτερόλεπτα, 24/7/365</div>
-          <div class="calc-stat">🤖 Αυτόματη κράτηση στο ημερολόγιο: 100% αυτόματα</div>
-          <div class="calc-stat">📈 Ανάκτηση χαμένων ραντεβού: 80%</div>
+        <div class="mcw2-sections" id="mcw2-sliders">
+          <div class="mcw2-col">
+            <div class="mcw2-col-title" id="mcw2-col1-title">1. Μηνύματα & απόκριση</div>
+
+            <div class="mcw2-input active" id="mcw2-group-weeklyMessages" onclick="mcw2SetField('weeklyMessages')">
+              <div class="mcw2-label"><span>Μηνύματα/εβδομάδα</span><span class="mcw2-val" id="mcw2-val-weeklyMessages">40</span></div>
+              <input type="range" min="10" max="200" value="40" step="1" id="mcw2-slider-weeklyMessages">
+            </div>
+
+            <div class="mcw2-input" id="mcw2-group-responseMinutes" onclick="mcw2SetField('responseMinutes')">
+              <div class="mcw2-label"><span>Χρόνος απόκρισης</span><span class="mcw2-val" id="mcw2-val-responseMinutes">2 ώρες</span></div>
+              <input type="range" min="0" max="1440" value="120" step="5" id="mcw2-slider-responseMinutes">
+            </div>
+
+            <div class="mcw2-input" id="mcw2-group-aov" onclick="mcw2SetField('aov')" style="display:none;">
+              <div class="mcw2-label"><span>Μέση αξία πελάτη/ραντεβού (AOV)</span><span class="mcw2-val" id="mcw2-val-aov">€120</span></div>
+              <input type="range" min="50" max="500" value="120" step="10" id="mcw2-slider-aov">
+            </div>
+
+            <div class="mcw2-input" id="mcw2-group-lost" onclick="mcw2SetField('lost')" style="display:none;">
+              <div class="mcw2-label"><span>Ανακτημένα ραντεβού/μήνα</span><span class="mcw2-val" id="mcw2-val-lost">15</span></div>
+              <input type="range" min="0" max="200" value="15" step="1" id="mcw2-slider-lost">
+            </div>
+
+            <div class="mcw2-input" id="mcw2-group-frequency" onclick="mcw2SetField('frequency')" style="display:none;">
+              <div class="mcw2-label"><span>Συχνότητα επαναγοράς/έτος</span><span class="mcw2-val" id="mcw2-val-frequency">3 φορές</span></div>
+              <input type="range" min="1" max="12" value="3" step="1" id="mcw2-slider-frequency">
+            </div>
+
+            <div class="mcw2-input" id="mcw2-group-margin" onclick="mcw2SetField('margin')" style="display:none;">
+              <div class="mcw2-label"><span>Ποσοστό καθαρού κέρδους</span><span class="mcw2-val" id="mcw2-val-margin">100%</span></div>
+              <input type="range" min="0" max="100" value="100" step="1" id="mcw2-slider-margin">
+            </div>
+
+            <div class="mcw2-ltv" id="mcw2-ltv-box" style="display:none;">
+              <span class="mcw2-ltv-label">Συνολική αξία (LTV) / πελάτη:</span>
+              <span class="mcw2-ltv-val" id="mcw2-ltv-val">€360</span>
+            </div>
+          </div>
+
+          <div class="mcw2-col">
+            <div class="mcw2-col-title">2. Κόστος συστήματος</div>
+            <div class="mcw2-presets-bar" id="mcw2-pricing-presets" style="display:none;">
+              <button class="mcw2-mini-btn" onclick="mcw2SetPricingPreset('promo')">Προσφορά testimonial (€450)</button>
+              <button class="mcw2-mini-btn" onclick="mcw2SetPricingPreset('standard')">Κανονική τιμή (€1000)</button>
+            </div>
+            <div class="mcw2-input" id="mcw2-group-adspend" onclick="mcw2SetField('adspend')">
+              <div class="mcw2-label"><span>Μηνιαία συνδρομή συστήματος</span><span class="mcw2-val" id="mcw2-val-adspend">€0</span></div>
+              <input type="range" min="0" max="2000" value="0" step="10" id="mcw2-slider-adspend">
+            </div>
+            <div class="mcw2-input" id="mcw2-group-agency" onclick="mcw2SetField('agency')">
+              <div class="mcw2-label"><span>Λοιπά μηνιαία κόστη marketing</span><span class="mcw2-val" id="mcw2-val-agency">€0</span></div>
+              <input type="range" min="0" max="2000" value="0" step="10" id="mcw2-slider-agency">
+            </div>
+            <div class="mcw2-input" id="mcw2-group-setup" onclick="mcw2SetField('setup')" style="display:none;">
+              <div class="mcw2-label"><span>Εφάπαξ κόστος εγκατάστασης</span><span class="mcw2-val" id="mcw2-val-setup">€0</span></div>
+              <input type="range" min="0" max="2000" value="0" step="10" id="mcw2-slider-setup">
+            </div>
+          </div>
+
+          <div class="mcw2-col">
+            <div class="mcw2-col-title">3. Κόστος χρόνου (χειροκίνητα)</div>
+            <div class="mcw2-input" id="mcw2-group-hourly" onclick="mcw2SetField('hourly')">
+              <div class="mcw2-label"><span>Ωρομίσθιο γραμματέα/σου</span><span class="mcw2-val" id="mcw2-val-hourly">€15</span></div>
+              <input type="range" min="10" max="100" value="15" step="1" id="mcw2-slider-hourly">
+            </div>
+            <div class="mcw2-input" id="mcw2-group-hours" onclick="mcw2SetField('hours')">
+              <div class="mcw2-label"><span>Ώρες/μήνα σε χειροκίνητη απάντηση</span><span class="mcw2-val" id="mcw2-val-hours">40 ώρες</span></div>
+              <input type="range" min="0" max="160" value="40" step="1" id="mcw2-slider-hours">
+            </div>
+          </div>
         </div>
-        <div class="calc-results" aria-live="polite">
-          <div class="calc-result calc-result--dream">
-            <div class="num" id="recoveredAppts">—</div>
-            <div class="lbl">✅ Νέα κλεισμένα ραντεβού / μήνα</div>
+
+        <div class="mcw2-bottom">
+          <div class="mcw2-keypad">
+            <div class="mcw2-keypad-head">
+              <div class="mcw2-keypad-title">Επεξεργασία πεδίου</div>
+              <div class="mcw2-keypad-target" id="mcw2-keypad-target">Μηνύματα/εβδομάδα</div>
+            </div>
+            <div class="mcw2-keypad-grid">
+              <button class="mcw2-key" onclick="mcw2PressKey(1)">1</button><button class="mcw2-key" onclick="mcw2PressKey(2)">2</button><button class="mcw2-key" onclick="mcw2PressKey(3)">3</button>
+              <button class="mcw2-key" onclick="mcw2PressKey(4)">4</button><button class="mcw2-key" onclick="mcw2PressKey(5)">5</button><button class="mcw2-key" onclick="mcw2PressKey(6)">6</button>
+              <button class="mcw2-key" onclick="mcw2PressKey(7)">7</button><button class="mcw2-key" onclick="mcw2PressKey(8)">8</button><button class="mcw2-key" onclick="mcw2PressKey(9)">9</button>
+              <button class="mcw2-key mcw2-key-clear" onclick="mcw2PressKey('C')">C</button><button class="mcw2-key" onclick="mcw2PressKey(0)">0</button><button class="mcw2-key mcw2-key-back" onclick="mcw2PressKey('back')">⌫</button>
+            </div>
           </div>
-          <div class="calc-result calc-result--dream">
-            <div class="num" id="extraRevenueMonth">—</div>
-            <div class="lbl">💰 Επιπλέον καθαρό έσοδο / μήνα</div>
-          </div>
-          <div class="calc-result calc-result--dream">
-            <div class="num" id="extraRevenueYear">—</div>
-            <div class="lbl">💰 Επιπλέον έσοδο / χρόνο</div>
+
+          <div class="mcw2-dashboard">
+            <div class="mcw2-scenarios" id="mcw2-scenarios-bar" style="display:none;">
+              <span class="mcw2-scenario-label">Σενάριο:</span>
+              <button class="mcw2-scenario active" id="mcw2-scen-guess" onclick="mcw2SwitchScenario('guess')">Η εκτίμησή μας</button>
+              <button class="mcw2-scenario" id="mcw2-scen-fika" onclick="mcw2SwitchScenario('fika')">Σαν τη Ζωή Φίκα</button>
+              <button class="mcw2-scenario" id="mcw2-scen-breakeven" onclick="mcw2SwitchScenario('breakeven')">Νεκρό σημείο</button>
+            </div>
+
+            <div class="mcw2-dash-head">
+              <div class="mcw2-col-title" style="border:none;margin:0;padding:0;" id="mcw2-results-title">Σύνοψη (σημερινή κατάσταση)</div>
+              <button class="mcw2-reveal-btn" id="mcw2-reveal-btn" onclick="mcw2ToggleReveal()">Εμφάνιση όλων</button>
+            </div>
+
+            <div class="mcw2-metrics hover-reveal" id="mcw2-metric-grid">
+              <div class="mcw2-metric" id="mcw2-box-1"><div class="mcw2-metric-label" id="mcw2-lbl-1">Ποσοστό απώλειας</div><div class="mcw2-metric-val" id="mcw2-res-1">0%</div><div class="mcw2-metric-sub" id="mcw2-sub-1">Λόγω αργής απάντησης</div></div>
+              <div class="mcw2-metric" id="mcw2-box-2"><div class="mcw2-metric-label" id="mcw2-lbl-2">Χαμένα έσοδα/μήνα</div><div class="mcw2-metric-val" id="mcw2-res-2">€0</div><div class="mcw2-metric-sub" id="mcw2-sub-2"></div></div>
+              <div class="mcw2-metric" id="mcw2-box-3"><div class="mcw2-metric-label" id="mcw2-lbl-3">Κόστος χρόνου</div><div class="mcw2-metric-val" id="mcw2-res-3">€0</div><div class="mcw2-metric-sub" id="mcw2-sub-3">Χαμένος χρόνος</div></div>
+              <div class="mcw2-metric" id="mcw2-box-4"><div class="mcw2-metric-label" id="mcw2-lbl-4">Συνολική απώλεια/μήνα</div><div class="mcw2-metric-val" id="mcw2-res-4">€0</div><div class="mcw2-metric-sub" id="mcw2-sub-4"></div></div>
+            </div>
+
+            <div class="mcw2-summary">
+              <div class="mcw2-row"><span class="mcw2-row-label" id="mcw2-lbl-invest">Συνολικό μηνιαίο κόστος:</span><span class="mcw2-row-val loss" id="mcw2-res-invest">€0</span></div>
+              <div class="mcw2-row"><span class="mcw2-row-label" id="mcw2-lbl-profit">Ετήσια απώλεια:</span><span class="mcw2-row-val loss" id="mcw2-res-profit">€0</span></div>
+              <div class="mcw2-row" id="mcw2-row-breakeven" style="display:none;"><span class="mcw2-row-label" id="mcw2-lbl-breakeven">Ραντεβού για break-even:</span><span class="mcw2-row-val highlight" id="mcw2-res-breakeven">0</span></div>
+              <div class="mcw2-row" id="mcw2-row-ltv" style="display:none;"><span class="mcw2-row-label">Συνολική αξία LTV νέων πελατών:</span><span class="mcw2-row-val highlight" id="mcw2-res-ltv">€0</span></div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="calc-panel" id="tab3Panel" role="tabpanel" aria-labelledby="tab3Btn" hidden>
-        <div class="gap-grid">
-          <div class="gap-col gap-col--bad">
-            <h4>Χωρίς Σύστημα</h4>
-            <p>❌ Χάνεις <strong id="gapLostRevenueMonth">—</strong>/μήνα σε πελάτες που πάνε αλλού</p>
-            <p>❌ Απαντάς με ώρες καθυστέρηση</p>
-            <p>❌ Χάνεις leads Σαββατοκύριακα &amp; βράδια</p>
-            <p>❌ <strong id="gapLostAppts">—</strong> χαμένα ραντεβού/μήνα</p>
-          </div>
-          <div class="gap-col gap-col--good">
-            <h4>Η Άμεση Απάντηση</h4>
-            <p>✅ Κλειδώνεις <strong id="gapExtraRevenueMonth">—</strong>/μήνα νέο τζίρο</p>
-            <p>✅ Απαντάει σε 5″ και κλείνει μόνο του το ραντεβού</p>
-            <p>✅ Δουλεύει 24/7 ακόμα κι όταν κοιμάσαι</p>
-            <p>✅ <strong id="gapRecoveredAppts">—</strong> ανακτημένα ραντεβού/μήνα</p>
-          </div>
-        </div>
-      </div>
-
-      <p class="calc-fine" id="calcFine">Εκτίμηση βάσει ~25% μετατροπή μηνύματος σε ραντεβού (αν απαντούσες αμέσως) και ~80% ανάκτηση χαμένων ραντεβού με το σύστημα. Πρόσαρμοσε τα inputs στα δικά σου νούμερα.</p>
     </div>
   </div>
 </section>
+
+<style>
+  .mcw2{font-family:'Inter',sans-serif;}
+  .mcw2-presets{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+  .mcw2-preset-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;color:var(--ink-faint);letter-spacing:.05em;}
+  .mcw2-tab{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink);font-size:12.5px;font-weight:600;padding:9px 18px;border-radius:20px;cursor:pointer;}
+  .mcw2-tab:hover{border-color:var(--gold);color:var(--gold-bright);}
+  .mcw2-tab.active{background:var(--gold-bright);color:#1A1509;border-color:var(--gold-bright);}
+  .mcw2-card{background:var(--bg-raised);border:1.5px solid var(--gold);border-radius:16px;padding:24px;}
+  .mcw2-sections{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
+  @media(max-width:900px){.mcw2-sections{grid-template-columns:1fr;}}
+  .mcw2-col{background:rgba(255,255,255,0.015);border:1px solid var(--hairline);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;}
+  .mcw2-col-title{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--hairline);padding-bottom:6px;margin-bottom:2px;}
+  .mcw2-input{padding:9px 10px;background:rgba(0,0,0,0.2);border:1px solid var(--hairline);border-radius:8px;cursor:pointer;}
+  .mcw2-input:hover{border-color:rgba(201,162,75,0.35);}
+  .mcw2-input.active{background:rgba(201,162,75,0.06);border-color:var(--gold);}
+  .mcw2-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:500;font-size:12.5px;color:var(--ink-dim);}
+  .mcw2-val{font-family:'JetBrains Mono',monospace;color:var(--ink-dim);font-size:12px;font-weight:600;background:var(--bg);padding:2px 7px;border-radius:4px;border:1px solid var(--hairline);white-space:nowrap;}
+  .mcw2-input.active .mcw2-val{color:var(--gold-bright);background:rgba(201,162,75,0.14);border-color:var(--gold);}
+  .mcw2 input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--hairline);outline:none;margin:5px 0 2px;}
+  .mcw2 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold-bright);cursor:pointer;}
+  .mcw2-ltv{margin-top:auto;background:rgba(201,162,75,0.05);border:1px dashed var(--gold);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;}
+  .mcw2-ltv-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;}
+  .mcw2-ltv-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--gold-bright);}
+  .mcw2-presets-bar{display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;}
+  .mcw2-mini-btn{background:var(--bg-raised-2);border:1px solid var(--gold);color:var(--gold-bright);font-size:10.5px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer;}
+  .mcw2-mini-btn:hover{background:var(--gold-bright);color:#1A1509;}
+  .mcw2-bottom{display:grid;grid-template-columns:220px 1fr;gap:16px;border-top:1px dashed var(--hairline);padding-top:18px;}
+  @media(max-width:820px){.mcw2-bottom{grid-template-columns:1fr;}}
+  .mcw2-keypad{background:var(--bg);border:1px solid var(--hairline);border-radius:12px;padding:12px;display:flex;flex-direction:column;justify-content:center;}
+  .mcw2-keypad-head{text-align:center;margin-bottom:8px;}
+  .mcw2-keypad-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.05em;color:var(--ink-faint);text-transform:uppercase;}
+  .mcw2-keypad-target{font-size:12px;font-weight:600;color:var(--gold-bright);margin-top:2px;}
+  .mcw2-keypad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+  .mcw2-key{background:var(--bg-raised-2);border:1px solid var(--hairline);border-radius:6px;color:var(--ink);font-size:14px;font-weight:600;padding:9px;cursor:pointer;}
+  .mcw2-key:hover{background:var(--hairline);color:var(--gold-bright);border-color:var(--gold);}
+  .mcw2-key-clear{color:var(--ink-faint);}
+  .mcw2-key-back{color:var(--wine-bright);}
+  .mcw2-scenarios{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap;}
+  .mcw2-scenario-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;}
+  .mcw2-scenario{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink);font-size:11.5px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;}
+  .mcw2-scenario:hover{border-color:var(--gold);color:var(--gold-bright);}
+  .mcw2-scenario.active{background:var(--gold-bright);color:#1A1509;border-color:var(--gold-bright);font-weight:700;}
+  .mcw2-dash-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+  .mcw2-reveal-btn{background:var(--bg-raised-2);border:1px solid var(--hairline);color:var(--ink-dim);font-size:10.5px;font-weight:600;padding:5px 12px;border-radius:20px;cursor:pointer;}
+  .mcw2-reveal-btn:hover{border-color:var(--gold);color:var(--gold-bright);}
+  .mcw2-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px;}
+  @media(max-width:640px){.mcw2-metrics{grid-template-columns:repeat(2,1fr);}}
+  .mcw2-metrics.hover-reveal{opacity:.15;filter:blur(4px);cursor:pointer;transition:all .3s ease;}
+  .mcw2-metrics.hover-reveal:hover,.mcw2-metrics.revealed{opacity:1;filter:blur(0);}
+  .mcw2-metric{background:rgba(255,255,255,0.02);border:1px solid var(--hairline);border-radius:10px;padding:11px 6px;text-align:center;}
+  .mcw2-metric-label{font-size:10px;font-weight:700;color:var(--ink-dim);margin-bottom:4px;}
+  .mcw2-metric-val{font-family:'Fraunces',serif;font-size:18px;font-weight:600;line-height:1.1;color:var(--ink);}
+  .mcw2-metric-sub{font-size:9.5px;color:var(--ink-faint);margin-top:4px;}
+  .mcw2-summary{background:rgba(0,0,0,0.25);border:1px solid var(--hairline);border-radius:8px;padding:7px 15px;}
+  .mcw2-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--hairline);}
+  .mcw2-row:last-child{border-bottom:none;}
+  .mcw2-row-label{font-size:12px;color:var(--ink-dim);}
+  .mcw2-row-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--ink);}
+  .mcw2-row-val.loss{color:var(--wine-bright);}
+  .mcw2-row-val.gain{color:var(--sage-bright);}
+  .mcw2-row-val.highlight{color:var(--gold-bright);}
+  .mcw2-comparison{display:none;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;}
+  @media(max-width:820px){.mcw2-comparison{grid-template-columns:1fr;}}
+  .mcw2-comp-box{background:rgba(255,255,255,0.02);border:1px solid var(--hairline);border-radius:12px;padding:18px;text-align:center;}
+  .mcw2-comp-box.mcw2-highlight{border-color:var(--gold);background:rgba(201,162,75,0.05);}
+  .mcw2-comp-title{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;margin-bottom:8px;}
+  .mcw2-comp-val{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:4px;}
+  .mcw2-comp-sub{font-size:11px;color:var(--ink-dim);}
+</style>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  let activeTab='current', activeField='weeklyMessages', activeScenario='guess', isRevealed=false;
+  let globalMargin=100;
+
+  const state = {
+    current: { weeklyMessages:40, responseMinutes:120, adspend:0, agency:0, hourly:15, hours:40 },
+    opt: {
+      guess:      { aov:120, lost:15, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
+      fika:       { aov:120, lost:35, frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 },
+      breakeven:  { aov:120, lost:5,  frequency:3, adspend:450,  agency:0, setup:0, hourly:15, hours:0 }
+    }
+  };
+
+  const fields = {
+    weeklyMessages:{el:$('mcw2-slider-weeklyMessages'),min:10,max:200,label:'Μηνύματα/εβδομάδα'},
+    responseMinutes:{el:$('mcw2-slider-responseMinutes'),min:0,max:1440,label:'Χρόνος απόκρισης'},
+    aov:{el:$('mcw2-slider-aov'),min:50,max:500,label:'AOV'},
+    lost:{el:$('mcw2-slider-lost'),min:0,max:200,label:'Ανακτημένα ραντεβού'},
+    frequency:{el:$('mcw2-slider-frequency'),min:1,max:12,label:'Συχνότητα επαναγοράς'},
+    adspend:{el:$('mcw2-slider-adspend'),min:0,max:2000,label:'Μηνιαία συνδρομή'},
+    agency:{el:$('mcw2-slider-agency'),min:0,max:2000,label:'Λοιπά κόστη'},
+    setup:{el:$('mcw2-slider-setup'),min:0,max:2000,label:'Setup fee'},
+    hourly:{el:$('mcw2-slider-hourly'),min:10,max:100,label:'Ωρομίσθιο'},
+    hours:{el:$('mcw2-slider-hours'),min:0,max:160,label:'Ώρες χειροκίνητα'},
+    margin:{el:$('mcw2-slider-margin'),min:0,max:100,label:'Ποσοστό κέρδους'}
+  };
+
+  function fmtEUR(n){ const neg=n<0; n=Math.abs(Math.round(n)); const s='€'+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'); return neg?'-'+s:s; }
+  function fmtMinutes(m){ if(m<5) return '<5 λεπτά'; if(m<180) return Math.round(m/60*10)/10+' ώρες'; return Math.round(m/1440*10)/10+' μέρες'; }
+  function lossFactorFor(min){ if(min<5) return 0; if(min<=180) return 0.40; return 0.65; }
+
+  function currentMetrics(){
+    const d = state.current;
+    const aov = state.opt.guess.aov || 120;
+    const lossFactor = lossFactorFor(d.responseMinutes);
+    const baseConversion = 0.25;
+    const lostAppts = Math.round(d.weeklyMessages*4.33*baseConversion*lossFactor);
+    const lostRevenue = lostAppts*aov;
+    const timeCost = d.hourly*d.hours;
+    const otherCost = d.adspend+d.agency;
+    const totalMonthly = lostRevenue+timeCost+otherCost;
+    return { lossFactor, lostAppts, lostRevenue, timeCost, otherCost, totalMonthly, aov };
+  }
+
+  function optimalMetrics(scenKey){
+    const d = state.opt[scenKey];
+    const marginRate = (globalMargin||0)/100;
+    const monthlyRevenue = d.aov*d.lost;
+    const ltvTotal = d.aov*d.lost*d.frequency;
+    const timeCost = d.hourly*d.hours;
+    const totalInvestment = d.adspend+d.agency+d.setup+timeCost;
+    const ltvNetProfit = (ltvTotal*marginRate)-totalInvestment;
+    const roiMonthly = totalInvestment>0 ? monthlyRevenue/totalInvestment : 0;
+    const roiLtv = totalInvestment>0 ? ltvTotal/totalInvestment : 0;
+    const netProfitPerClientLtv = d.aov*d.frequency*marginRate;
+    const breakEven = netProfitPerClientLtv>0 ? Math.ceil(totalInvestment/netProfitPerClientLtv) : 0;
+    return { monthlyRevenue, ltvTotal, timeCost, totalInvestment, ltvNetProfit, roiMonthly, roiLtv, breakEven };
+  }
+
+  window.mcw2SetField = function(k){
+    if(activeTab==='compare') return;
+    activeField=k;
+    document.querySelectorAll('.mcw2-input').forEach(g=>g.classList.remove('active'));
+    const el=$('mcw2-group-'+k); if(el) el.classList.add('active');
+    $('mcw2-keypad-target').innerText=fields[k].label;
+  };
+
+  window.mcw2PressKey = function(k){
+    if(activeTab==='compare') return;
+    const f=fields[activeField]; let cur=parseFloat(f.el.value)||0;
+    if(k==='C'){ cur=f.min; } else if(k==='back'){ cur=Math.floor(cur/10); } else { cur=parseFloat((cur.toString()+k)); }
+    if(cur>f.max) cur=f.max; if(cur<f.min) cur=f.min;
+    f.el.value=cur; calc();
+  };
+
+  window.mcw2SetPricingPreset = function(type){
+    if(activeTab!=='optimal') mcw2SwitchTab('optimal');
+    if(type==='promo'){ $('mcw2-slider-adspend').value=450; } else { $('mcw2-slider-adspend').value=1000; }
+    $('mcw2-slider-agency').value=0; $('mcw2-slider-setup').value=0;
+    calc();
+  };
+
+  window.mcw2ToggleReveal = function(){
+    isRevealed=!isRevealed;
+    const g=$('mcw2-metric-grid');
+    g.classList.toggle('revealed', isRevealed);
+    g.classList.toggle('hover-reveal', !isRevealed);
+    $('mcw2-reveal-btn').innerText = isRevealed ? 'Απόκρυψη' : 'Εμφάνιση όλων';
+  };
+
+  window.mcw2SwitchScenario = function(s){
+    if(activeTab!=='optimal') return;
+    activeScenario=s;
+    document.querySelectorAll('.mcw2-scenario').forEach(b=>b.classList.remove('active'));
+    $('mcw2-scen-'+s).classList.add('active');
+    const d=state.opt[s];
+    $('mcw2-slider-aov').value=d.aov; $('mcw2-slider-lost').value=d.lost; $('mcw2-slider-frequency').value=d.frequency;
+    $('mcw2-slider-adspend').value=d.adspend; $('mcw2-slider-agency').value=d.agency; $('mcw2-slider-setup').value=d.setup;
+    $('mcw2-slider-hourly').value=d.hourly; $('mcw2-slider-hours').value=d.hours; $('mcw2-slider-margin').value=globalMargin;
+    calc();
+  };
+
+  window.mcw2SwitchTab = function(tab){
+    activeTab=tab;
+    document.querySelectorAll('.mcw2-tab').forEach(b=>b.classList.remove('active'));
+    $('mcw2-tab-'+tab).classList.add('active');
+    const slidersC=$('mcw2-sliders'), compView=$('mcw2-comparison-view');
+
+    if(tab==='compare'){
+      slidersC.style.display='none'; compView.style.display='grid';
+      $('mcw2-results-title').innerText='Σύγκριση';
+      $('mcw2-scenarios-bar').style.display='none'; $('mcw2-pricing-presets').style.display='none';
+      updateComparison(); return;
+    }
+    slidersC.style.display='grid'; compView.style.display='none';
+    const show=(id,v)=>{$(id).style.display=v;};
+
+    if(tab==='current'){
+      $('mcw2-col1-title').innerText='1. Μηνύματα & απόκριση';
+      show('mcw2-group-weeklyMessages','block'); show('mcw2-group-responseMinutes','block');
+      show('mcw2-group-aov','none'); show('mcw2-group-lost','none'); show('mcw2-group-frequency','none'); show('mcw2-group-setup','none'); show('mcw2-group-margin','none');
+      show('mcw2-pricing-presets','none'); show('mcw2-scenarios-bar','none'); show('mcw2-ltv-box','none');
+      $('mcw2-results-title').innerText='Σύνοψη (σημερινή κατάσταση)';
+      $('mcw2-slider-weeklyMessages').value=state.current.weeklyMessages;
+      $('mcw2-slider-responseMinutes').value=state.current.responseMinutes;
+      $('mcw2-slider-adspend').value=state.current.adspend; $('mcw2-slider-agency').value=state.current.agency;
+      $('mcw2-slider-hourly').value=state.current.hourly; $('mcw2-slider-hours').value=state.current.hours;
+      mcw2SetField('weeklyMessages');
+    } else {
+      $('mcw2-col1-title').innerText='1. Στόχοι με το σύστημα';
+      show('mcw2-group-weeklyMessages','none'); show('mcw2-group-responseMinutes','none');
+      show('mcw2-group-aov','block'); show('mcw2-group-lost','block'); show('mcw2-group-frequency','block'); show('mcw2-group-setup','block'); show('mcw2-group-margin','block');
+      show('mcw2-pricing-presets','flex'); show('mcw2-scenarios-bar','flex'); show('mcw2-ltv-box','flex');
+      $('mcw2-results-title').innerText='Σύνοψη (ιδανική κατάσταση)';
+      const d=state.opt[activeScenario];
+      $('mcw2-slider-aov').value=d.aov; $('mcw2-slider-lost').value=d.lost; $('mcw2-slider-frequency').value=d.frequency;
+      $('mcw2-slider-adspend').value=d.adspend; $('mcw2-slider-agency').value=d.agency; $('mcw2-slider-setup').value=d.setup;
+      $('mcw2-slider-hourly').value=d.hourly; $('mcw2-slider-hours').value=d.hours; $('mcw2-slider-margin').value=globalMargin;
+      mcw2SetField('aov');
+    }
+    calc();
+  };
+
+  function saveState(){
+    if(activeTab==='current'){
+      state.current = { weeklyMessages:+$('mcw2-slider-weeklyMessages').value, responseMinutes:+$('mcw2-slider-responseMinutes').value,
+        adspend:+$('mcw2-slider-adspend').value, agency:+$('mcw2-slider-agency').value, hourly:+$('mcw2-slider-hourly').value, hours:+$('mcw2-slider-hours').value };
+    } else if(activeTab==='optimal'){
+      globalMargin=+$('mcw2-slider-margin').value;
+      state.opt[activeScenario] = { aov:+$('mcw2-slider-aov').value, lost:+$('mcw2-slider-lost').value, frequency:+$('mcw2-slider-frequency').value,
+        adspend:+$('mcw2-slider-adspend').value, agency:+$('mcw2-slider-agency').value, setup:+$('mcw2-slider-setup').value,
+        hourly:+$('mcw2-slider-hourly').value, hours:+$('mcw2-slider-hours').value };
+    }
+  }
+
+  function calc(){
+    saveState();
+    if(activeTab==='current'){
+      $('mcw2-val-weeklyMessages').innerText=state.current.weeklyMessages;
+      $('mcw2-val-responseMinutes').innerText=fmtMinutes(state.current.responseMinutes);
+      $('mcw2-val-adspend').innerText=fmtEUR(state.current.adspend);
+      $('mcw2-val-agency').innerText=fmtEUR(state.current.agency);
+      $('mcw2-val-hourly').innerText=fmtEUR(state.current.hourly)+'/ώρα';
+      $('mcw2-val-hours').innerText=state.current.hours+' ώρες';
+
+      const m=currentMetrics();
+      $('mcw2-lbl-1').innerText='Ποσοστό απώλειας'; $('mcw2-res-1').innerText=Math.round(m.lossFactor*100)+'%'; $('mcw2-sub-1').innerText='Λόγω αργής απάντησης';
+      $('mcw2-lbl-2').innerText='Χαμένα έσοδα/μήνα'; $('mcw2-res-2').innerText=fmtEUR(m.lostRevenue); $('mcw2-sub-2').innerText=m.lostAppts+' χαμένα ραντεβού';
+      $('mcw2-lbl-3').innerText='Κόστος χρόνου'; $('mcw2-res-3').innerText=fmtEUR(m.timeCost); $('mcw2-sub-3').innerText='Χαμένος χρόνος';
+      $('mcw2-lbl-4').innerText='Συνολική απώλεια/μήνα'; $('mcw2-res-4').innerText=fmtEUR(m.totalMonthly); $('mcw2-sub-4').innerText='';
+
+      $('mcw2-lbl-invest').innerText='Συνολικό μηνιαίο κόστος:'; $('mcw2-res-invest').innerText=fmtEUR(m.totalMonthly); $('mcw2-res-invest').className='mcw2-row-val loss';
+      $('mcw2-lbl-profit').innerText='Ετήσια απώλεια:'; $('mcw2-res-profit').innerText=fmtEUR(m.totalMonthly*12); $('mcw2-res-profit').className='mcw2-row-val loss';
+      $('mcw2-row-breakeven').style.display='none'; $('mcw2-row-ltv').style.display='none';
+    } else if(activeTab==='optimal'){
+      const d=state.opt[activeScenario];
+      $('mcw2-val-aov').innerText=fmtEUR(d.aov); $('mcw2-val-lost').innerText=d.lost; $('mcw2-val-frequency').innerText=d.frequency+' φορές';
+      $('mcw2-val-adspend').innerText=fmtEUR(d.adspend); $('mcw2-val-agency').innerText=fmtEUR(d.agency); $('mcw2-val-setup').innerText=fmtEUR(d.setup);
+      $('mcw2-val-hourly').innerText=fmtEUR(d.hourly)+'/ώρα'; $('mcw2-val-hours').innerText=d.hours+' ώρες'; $('mcw2-val-margin').innerText=globalMargin+'%';
+      $('mcw2-ltv-val').innerText=fmtEUR(d.aov*d.frequency);
+
+      const m=optimalMetrics(activeScenario);
+      $('mcw2-lbl-1').innerText='ROI συστήματος (μηνιαίο)'; $('mcw2-res-1').innerText=m.roiMonthly.toFixed(1)+'x'; $('mcw2-sub-1').innerText='Έσοδα / επένδυση';
+      $('mcw2-lbl-2').innerText='Επιπλέον έσοδα/μήνα'; $('mcw2-res-2').innerText=fmtEUR(m.monthlyRevenue); $('mcw2-sub-2').innerText='';
+      $('mcw2-lbl-3').innerText='Κόστος χρόνου'; $('mcw2-res-3').innerText=fmtEUR(m.timeCost); $('mcw2-sub-3').innerText='Χειροκίνητα, πλέον σχεδόν 0';
+      $('mcw2-lbl-4').innerText='ROI συνολικό (LTV)'; $('mcw2-res-4').innerText=m.roiLtv.toFixed(1)+'x'; $('mcw2-sub-4').innerText='Με επαναγορές';
+
+      $('mcw2-lbl-invest').innerText='Συνολικό μηνιαίο κόστος συστήματος:'; $('mcw2-res-invest').innerText=fmtEUR(m.totalInvestment); $('mcw2-res-invest').className='mcw2-row-val loss';
+      $('mcw2-lbl-profit').innerText='Καθαρό κέρδος (με επαναγορές):'; $('mcw2-res-profit').innerText=fmtEUR(m.ltvNetProfit); $('mcw2-res-profit').className='mcw2-row-val '+(m.ltvNetProfit>=0?'gain':'loss');
+
+      $('mcw2-row-breakeven').style.display='flex'; $('mcw2-lbl-breakeven').innerText='Ραντεβού για break-even:'; $('mcw2-res-breakeven').innerText=m.breakEven+' ραντεβού';
+      $('mcw2-row-ltv').style.display='flex'; $('mcw2-res-ltv').innerText=fmtEUR(m.ltvTotal);
+    }
+  }
+
+  function updateComparison(){
+    const cm=currentMetrics();
+    const om=optimalMetrics(activeScenario);
+    const currAnnual=cm.totalMonthly*12;
+    const optAnnual=om.ltvNetProfit*12;
+    const gapAnnual=currAnnual+optAnnual;
+
+    $('mcw2-comp-curr-annual').innerText=fmtEUR(currAnnual); $('mcw2-comp-curr-monthly').innerText=fmtEUR(cm.totalMonthly)+'/μήνα';
+    $('mcw2-comp-opt-annual').innerText=fmtEUR(optAnnual); $('mcw2-comp-opt-monthly').innerText=fmtEUR(om.ltvNetProfit)+'/μήνα';
+    $('mcw2-comp-gap-annual').innerText=fmtEUR(gapAnnual)+'/έτος'; $('mcw2-comp-gap-monthly').innerText=fmtEUR(cm.totalMonthly+om.ltvNetProfit)+'/μήνα';
+  }
+
+  Object.keys(fields).forEach(k=>{
+    if(!fields[k].el) return;
+    fields[k].el.addEventListener('input', ()=>{ mcw2SetField(k); calc(); });
+  });
+
+  mcw2SwitchTab('current');
+})();
+</script>
 
 <!-- ============================================================
      PAIN GRID
@@ -1507,162 +1564,6 @@ input[type="range"]::-moz-range-thumb{
 </footer>
 
 <script>
-/* ============================================================
-   CALCULATOR — "Το κόστος της σιωπής" (3-tab)
-   baseConversionRate      = 0.25  (μηνύματα → ραντεβού, αν απαντούσες αμέσως)
-   lostAppointmentsMonth   = round(μηνύματα/εβδ × 4.33 × 0.25 × lossFactor)
-   lostRevenueMonth        = lostAppointmentsMonth × AOV
-   lostRevenueYear         = lostRevenueMonth × 12
-   recoveryRate            = 0.80  (ανάκτηση με 5" response time)
-   recoveredAppointmentsMonth = round(lostAppointmentsMonth × recoveryRate)
-   extraRevenueMonth       = recoveredAppointmentsMonth × AOV
-   ============================================================ */
-(function(){
-  var baseConversionRate = 0.25;
-  var recoveryRate = 0.80;
-
-  var msgSlider = document.getElementById('msgSlider');
-  var aovSlider = document.getElementById('aovSlider');
-  var msgOut = document.getElementById('msgValue');
-  var aovOut = document.getElementById('aovValue');
-  var responseRadios = document.querySelectorAll('input[name="responseTime"]');
-
-  var lostApptsEl        = document.getElementById('lostAppts');
-  var lostRevenueMonthEl = document.getElementById('lostRevenueMonth');
-  var lostRevenueYearEl  = document.getElementById('lostRevenueYear');
-  var recoveredApptsEl   = document.getElementById('recoveredAppts');
-  var extraRevenueMonthEl= document.getElementById('extraRevenueMonth');
-  var extraRevenueYearEl = document.getElementById('extraRevenueYear');
-
-  var gapLostRevenueMonthEl   = document.getElementById('gapLostRevenueMonth');
-  var gapLostApptsEl          = document.getElementById('gapLostAppts');
-  var gapExtraRevenueMonthEl  = document.getElementById('gapExtraRevenueMonth');
-  var gapRecoveredApptsEl     = document.getElementById('gapRecoveredAppts');
-
-  function euro(n){
-    return '€' + Math.round(n).toLocaleString('el-GR');
-  }
-
-  /* γέμισμα του track μέχρι το thumb */
-  function fill(slider){
-    var pct = (slider.value - slider.min) / (slider.max - slider.min) * 100;
-    slider.style.setProperty('--fill', pct + '%');
-  }
-
-  function getLossFactor(){
-    var checked = document.querySelector('input[name="responseTime"]:checked');
-    return checked ? parseFloat(checked.value) : 0.40;
-  }
-
-  function update(){
-    var weeklyMessages = parseInt(msgSlider.value, 10);
-    var aov = parseInt(aovSlider.value, 10);
-    var lossFactor = getLossFactor();
-
-    var lostAppointmentsMonth = Math.round(weeklyMessages * 4.33 * baseConversionRate * lossFactor);
-    var lostRevenueMonth = lostAppointmentsMonth * aov;
-    var lostRevenueYear = lostRevenueMonth * 12;
-
-    var recoveredAppointmentsMonth = Math.round(lostAppointmentsMonth * recoveryRate);
-    var extraRevenueMonth = recoveredAppointmentsMonth * aov;
-    var extraRevenueYear = extraRevenueMonth * 12;
-
-    msgOut.textContent = weeklyMessages;
-    aovOut.textContent = '€' + aov;
-
-    lostApptsEl.textContent = lostAppointmentsMonth;
-    lostRevenueMonthEl.textContent = euro(lostRevenueMonth);
-    lostRevenueYearEl.textContent = euro(lostRevenueYear);
-
-    recoveredApptsEl.textContent = recoveredAppointmentsMonth;
-    extraRevenueMonthEl.textContent = euro(extraRevenueMonth);
-    extraRevenueYearEl.textContent = euro(extraRevenueYear);
-
-    gapLostRevenueMonthEl.textContent = euro(lostRevenueMonth);
-    gapLostApptsEl.textContent = lostAppointmentsMonth;
-    gapExtraRevenueMonthEl.textContent = euro(extraRevenueMonth);
-    gapRecoveredApptsEl.textContent = recoveredAppointmentsMonth;
-
-    fill(msgSlider);
-    fill(aovSlider);
-  }
-
-  msgSlider.addEventListener('input', update);
-  aovSlider.addEventListener('input', update);
-  responseRadios.forEach(function(radio){
-    radio.addEventListener('change', update);
-  });
-  update();
-
-  /* ---- helper: εκτίμηση μηνυμάτων από επισκέψεις site ---- */
-  var msgHelperToggle = document.getElementById('msgHelperToggle');
-  var msgHelperPanel  = document.getElementById('msgHelperPanel');
-  var visitsSlider = document.getElementById('visitsSlider');
-  var pctSlider    = document.getElementById('pctSlider');
-  var visitsOut = document.getElementById('visitsValue');
-  var pctOut    = document.getElementById('pctValue');
-  var estimateOut = document.getElementById('estimateOut');
-  var msgHelperApply = document.getElementById('msgHelperApply');
-
-  msgHelperToggle.addEventListener('click', function(){
-    var expanded = msgHelperToggle.getAttribute('aria-expanded') === 'true';
-    msgHelperToggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-    msgHelperPanel.hidden = expanded;
-  });
-
-  function updateEstimate(){
-    var visits = parseInt(visitsSlider.value, 10);
-    var pct = parseInt(pctSlider.value, 10);
-    var estimate = Math.round(visits * (pct / 100) / 4.33);
-
-    visitsOut.textContent = visits;
-    pctOut.textContent = pct + '%';
-    estimateOut.textContent = estimate;
-
-    fill(visitsSlider);
-    fill(pctSlider);
-
-    return estimate;
-  }
-
-  visitsSlider.addEventListener('input', updateEstimate);
-  pctSlider.addEventListener('input', updateEstimate);
-  updateEstimate();
-
-  msgHelperApply.addEventListener('click', function(){
-    var estimate = updateEstimate();
-    msgSlider.value = estimate;
-    msgSlider.dispatchEvent(new Event('input'));
-
-    msgHelperToggle.setAttribute('aria-expanded', 'false');
-    msgHelperPanel.hidden = true;
-  });
-
-  /* ---- tabs ---- */
-  var tabs = [
-    {btn: document.getElementById('tab1Btn'), panel: document.getElementById('tab1Panel')},
-    {btn: document.getElementById('tab2Btn'), panel: document.getElementById('tab2Panel')},
-    {btn: document.getElementById('tab3Btn'), panel: document.getElementById('tab3Panel')}
-  ];
-
-  function activateTab(target){
-    tabs.forEach(function(tab){
-      var isActive = tab === target;
-      tab.btn.classList.toggle('is-active', isActive);
-      tab.btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      tab.btn.tabIndex = isActive ? 0 : -1;
-      tab.panel.classList.toggle('is-active', isActive);
-      tab.panel.hidden = !isActive;
-    });
-  }
-
-  tabs.forEach(function(tab){
-    tab.btn.addEventListener('click', function(){
-      activateTab(tab);
-    });
-  });
-})();
-
 /* ============================================================
    PHONE MOCKUP — εκκίνηση animation όταν μπει στο viewport
    ============================================================ */
