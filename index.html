@@ -126,7 +126,7 @@ section{padding:var(--sec-pad) 0}
   display:flex;
   align-items:center;
   justify-content:space-between;
-  height:68px;
+  padding:26px 28px;
 }
 .brand{
   display:flex;
@@ -170,17 +170,17 @@ section{padding:var(--sec-pad) 0}
    HERO
    ============================================================ */
 .hero{padding:56px 0 32px}
-.hero .eyebrow{margin-bottom:10px}
+.hero .eyebrow{margin-bottom:15px}
 .hero-grid{
   max-width:940px;
   margin:0 auto;
   text-align:center;
 }
 .hero h1{
-  font-size:clamp(26px,3.2vw,40px);
+  font-size:clamp(32px,4vw,52px);
   line-height:1.15;
   font-weight:600;
-  margin-bottom:12px;
+  margin-bottom:18px;
 }
 .hero h1 em{
   font-style:italic;
@@ -189,15 +189,16 @@ section{padding:var(--sec-pad) 0}
 .hero-tagline{
   font-family:var(--font-serif);
   font-style:italic;
-  font-size:clamp(17px,1.9vw,21px);
+  font-size:clamp(20px,2.3vw,25px);
   color:var(--sage-bright);
-  margin-bottom:24px;
+  margin-bottom:35px;
 }
 .hero-cta-row{
   display:flex;
   align-items:center;
   justify-content:center;
 }
+.hero-cta-row .btn{padding:18px 36px;font-size:17px}
 
 /* ---------- phone / DM mockup ---------- */
 .phone{
@@ -314,12 +315,14 @@ section{padding:var(--sec-pad) 0}
    VSL PLACEHOLDER
    ============================================================ */
 .vsl{padding-top:20px}
+@media(min-width:1301px){.vsl .wrap{max-width:1140px;}}
 .vsl-box{
   position:relative;
   aspect-ratio:16/9;
   background:var(--bg-raised);
-  border:1px solid var(--hairline);
+  border:2px solid var(--gold);
   border-radius:var(--radius);
+  box-shadow:0 0 24px rgba(201,162,75,0.2);
   overflow:hidden;
 }
 .vsl-box iframe{
