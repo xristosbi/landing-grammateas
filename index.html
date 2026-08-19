@@ -1341,6 +1341,17 @@ section{padding:var(--sec-pad) 0}
     $('mcw2-comp-opt-annual').innerText=fmtEUR(optAnnual); $('mcw2-comp-opt-monthly').innerText=fmtEUR(om.ltvNetProfit)+'/μήνα';
     $('mcw2-comp-gap-annual').innerText=fmtEUR(gapAnnual)+'/έτος'; $('mcw2-comp-gap-monthly').innerText=fmtEUR(cm.totalMonthly+om.ltvNetProfit)+'/μήνα';
 
+    const netGap = om.ltvNetProfit + cm.totalMonthly;
+    $('mcw2-lbl-invest').innerText='Επιπλέον καθαρό μηνιαίο κέρδος (Net Gap):';
+    $('mcw2-res-invest').innerText = netGap>=0 ? '+'+fmtEUR(netGap) : fmtEUR(netGap);
+    $('mcw2-res-invest').className = 'mcw2-row-val '+(netGap>=0?'gain':'loss');
+
+    $('mcw2-lbl-profit').innerText='Συνολικό ετήσιο διαφεύγον κέρδος (Annual Opportunity):';
+    $('mcw2-res-profit').innerText=fmtEUR(gapAnnual);
+    $('mcw2-res-profit').className='mcw2-row-val highlight';
+
+    $('mcw2-row-breakeven').style.display='none'; $('mcw2-row-ltv').style.display='none'; $('mcw2-row-setup').style.display='none';
+
     $('mcw2-breakdown').innerText = `Σήμερα χάνεις ${fmtEUR(currAnnual)}/έτος. Με το σύστημα, κερδίζεις ${fmtEUR(optAnnual)}/έτος καθαρά (μετά την αρχική εγκατάσταση). Συνολική διαφορά: ${fmtEUR(gapAnnual)}/έτος.`;
   }
 
